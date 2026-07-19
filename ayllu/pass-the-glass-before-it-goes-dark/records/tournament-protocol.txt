@@ -1,0 +1,60 @@
+# Tale tournament protocol — the exact requirements (2026-07-14)
+
+Provenance record for the six tales (`2026-07-14-tale-*.md`). Everything below is
+verbatim from the workflow script (run wf_eb3de8b5-67e, 6 agents, ~128k tokens,
+model claude-fable-5 throughout). Design: Tony's — three blind spins from
+low-probability space, then pairwise weaves (1+2, 2+3, 3+1) instructed to be less
+probable than both inputs. Acceptance criteria preregistered in conversation:
+laugh, cry, synthesize a seventh, or discard.
+
+## The mundane tale (the seed)
+
+THE MUNDANE TALE (the plain version — your raw material):
+
+A merchant grows lettuce in a warm southern valley and sells it in a cold northern city, many days' travel away. Lettuce spoils; the road is long; the wagons are cold but not cold enough, and no one can see inside a moving wagon. Each crate carries two dates: the day the lettuce was cut, and the day the northern market expects it. The merchant learned the hard way that these are different kinds of promise — a late crate loses money, but a spoiled crate sold anyway sickens the buyers and poisons her name, so spoiled crates go to the compost heap and into the ledger as losses, each under its true cause.
+
+One season, a traveling trickster teaches her the splitting trick: a lettuce can be sent as three ghost-lettuces down three different roads at once, and the ghosts do not spoil for being split — but none of them is lettuce yet, and only the single waybill, torn at exactly one market by exactly one clerk, makes one ghost real. The other two turn instantly to compost in their wagons, worthless but heavy, waiting to be shoveled. And the waybill itself wilts — faster, some say, than lettuce ever did. The merchant grows rich choosing her market at the last moment, and grows wise learning when a waybill has been held one day too long. Meanwhile, at home, her ice-house burns cordwood all winter whether the shelves are full or empty, and her accountant weeps that three-quarters of the year's labor is spent keeping the cold rather than selling the green.
+
+(the eight laws, as above)
+
+## The eight laws (the invariant)
+
+THE LAWS OF THE TALE (inviolable story-physics — costumes allowed, violations not):
+1. The good spoils continuously, in place and in transit, and its spoilage is INVISIBLE while it travels. There is no way to check on it without arriving at it. Its harvest paper is a birth certificate, not a heartbeat.
+2. Every crate carries TWO dates that must never be confused or added together: the day it was cut (after which it spoils regardless of anyone's plans) and the day the market expects it (a broken promise, but survivable). Lateness and spoilage are different kinds of death.
+3. Spoiled goods delivered are HARM, not discount. Selling spoiled lettuce sickens the buyer — worse than selling nothing. Spoiled goods must be composted and the loss written in the ledger under its true cause.
+4. THE SPLITTING TRICK: a lettuce may travel as several ghost-lettuces down several roads at once. No ghost alone is lettuce — each alone is unreadable fog, unsellable, unstealable, and (strangely) the splitting itself costs no freshness. Time still passes for the waybill.
+5. There is exactly ONE waybill per split lettuce, covering all its ghosts together. Tearing the waybill makes exactly one ghost real, at one market, and at that instant every other ghost becomes compost — worthless, yet still occupying wagon space until someone shovels it out.
+6. THE WAYBILL WILTS. Waiting has a price, and it is paid by the waybill, not the ghosts. Hold it too long and tearing it yields a wilted, sorry lettuce; hold it far too long and it yields nothing.
+7. THE CLERK'S WINDOW: only one attempt to tear any given waybill may be in progress at a time. The clerk admits the bearer, checks the waybill still lives, names the market, and only then tears. The tearing cannot be un-torn.
+8. THE ICE-HOUSE BURNS FUEL WHETHER OR NOT THE SHELVES ARE FULL. Most of the work of the trade is not moving lettuce; it is keeping the cold. This bill arrives every month regardless of sales.
+
+## Round 1 prompt (spin), N in 1..3
+
+You are storyteller N of 3 in a competition. Each of you receives the same mundane tale and works alone; you cannot see the others' work.
+
+(the mundane tale + the eight laws, as above)
+
+YOUR TASK: retell this as a fairy tale, deliberately sampling from LOW-PROBABILITY SPACE. Not the obvious fairy-tale moves — no default medieval kingdom, no default witch, no default moral, unless you can argue the default has become the improbable choice. Choose an unlikely setting, an unlikely teller, an unlikely emotional register, an unlikely genre-adjacency — whatever you reach for first, discard it and reach again, further out. Surprise a reader who has read ten thousand fairy tales.
+
+THE CONSTRAINT THAT MAKES THIS HARD: every one of the eight laws must remain true and load-bearing in your tale. They may wear any costume — the lettuce need not be lettuce, the waybill need not be paper — but each law must bind the plot, not decorate it. A reader who knows the laws should be able to find all eight doing real work. Improbability is cheap if you buy it by breaking the physics; the competition is improbability WITH the physics intact.
+
+Write a complete tale with a beginning, middle, and end — 700 to 1200 words. It should be genuinely good, not merely strange: the improbable choices must cohere.
+
+## Round 2 prompt (weave), N in 1..3
+
+You are weaver N of 3 in the second round of a competition. You receive TWO fairy tales, each already written by a storyteller who was instructed to sample from low-probability space while keeping eight inviolable laws intact.
+
+(the eight laws, as above)
+
+TALE ONE: "<tale A title>"
+<tale A full text>
+
+TALE TWO: "<tale B title>"
+<tale B full text>
+
+YOUR TASK: weave a NEW tale that is even LESS PROBABLE than both of the tales above — judged by distance from expected moves, not by randomness. You may steal from both, from either, or from neither; theft is legal, but the result must be a story neither storyteller would have written. Wherever these two tales went, note the direction they reached and reach past it, or reach somewhere orthogonal that makes both look conventional in hindsight.
+
+THE SAME CONSTRAINT BINDS YOU: all eight laws must remain true and load-bearing, in whatever costume you choose. Improbability bought by breaking the physics is disqualification. Improbability without coherence is noise, and noise is disqualification too. The winning move is a tale that fits together better than it had any right to, from further out than anyone expected.
+
+Write a complete tale — 700 to 1200 words.

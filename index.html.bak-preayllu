@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tony Mason: technical consulting and expert witness</title>
+  <meta name="description" content="Systems researcher and technical expert. Twenty-two years of commercial systems work, twelve US patents, a 2025 PhD from UBC, and active research on LLM reliability.">
+  <link rel="canonical" href="https://wamason.com/">
+  <link rel="stylesheet" href="/static/style.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Tony Mason",
+  "alternateName": "W. Anthony Mason",
+  "email": "tony@wamason.com",
+  "url": "https://wamason.com/",
+  "jobTitle": "Technical Consultant; Expert Witness",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "wamason.com LLC",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "614 Nashua St., Unit 139",
+      "addressLocality": "Milford",
+      "addressRegion": "NH",
+      "postalCode": "03055",
+      "addressCountry": "US"
+    }
+  },
+  "alumniOf": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "University of British Columbia"
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Georgia Institute of Technology"
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "University of Chicago"
+    }
+  ],
+  "sameAs": [
+    "https://github.com/fsgeek",
+    "https://www.linkedin.com/in/tonymason2",
+    "https://scholar.google.com/citations?user=-AWzh44AAAAJ",
+    "https://fsgeek.ca/"
+  ]
+}
+  </script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="container header-row">
+    <div>
+      <div class="brand-name"><a href="/">Tony Mason</a></div>
+      <div class="brand-tagline">Technical consulting and expert witness</div>
+    </div>
+    <nav aria-label="Primary">
+      <a href="/consulting/">Consulting</a>
+      <a href="/expert/">Expert witness</a>
+      <a href="https://fsgeek.ca/">Research</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+
+<section class="hero">
+  <p class="hero-lead">Every technical system rests on an assumption its builders have stopped seeing. My work is finding the one that is both load-bearing and wrong, then building and proving what should replace it.</p>
+  <p class="hero-body">Systems researcher and technical expert with twenty-two years of commercial work on Windows file systems and storage internals. PhD from UBC (2025) under Margo Seltzer and Ada Gavrilovska. Twelve issued US patents; co-author of lex &amp; yacc (O&#39;Reilly, 1990) and Windows NT Device Driver Development (New Riders, 1998). Current work spans LLM reliability and observability research, AI governance for financial services, and ontology construction for regulated decision systems.</p>
+</section>
+
+<section class="audience-row" aria-label="Services">
+  <div class="audience-card">
+    <h2>Consulting</h2>
+    <p>Fractional CTO, technical architect, and advisory engagements for teams shipping AI-adjacent products, including technical due diligence on AI reliability claims. An unusual pairing of deep systems foundations and active AI research: the depth to evaluate technical assertions rather than repeat them.</p>
+    <a href="/consulting/">Consulting overview &rarr;</a>
+  </div>
+  <div class="audience-card">
+    <h2>Expert witness</h2>
+    <p>Court-tested expert testimony across BC Supreme Court, US federal district courts, and USPTO proceedings. Patent infringement, trade-secret, and software-defect litigation, with an emerging position for LLM-related litigation grounded in active research on AI agent reliability.</p>
+    <a href="/expert/">Expert profile &rarr;</a>
+  </div>
+</section>
+
+<section class="credibility-strip" aria-label="Credentials">
+  <div>
+    <div class="label">Patents</div>
+    <div class="value">12 issued US</div>
+  </div>
+  <div>
+    <div class="label">Books</div>
+    <div class="value">lex &amp; yacc; NT Driver Development</div>
+  </div>
+  <div>
+    <div class="label">Doctorate</div>
+    <div class="value">UBC 2025 (Seltzer, Gavrilovska)</div>
+  </div>
+  <div>
+    <div class="label">Recent research</div>
+    <div class="value">Six 2026 arXiv preprints</div>
+  </div>
+</section>
+
+<section class="recent-section" aria-label="Recent work">
+  <h2>Recent</h2>
+  <div class="recent-cards">
+    <div class="recent-card">
+      <div class="meta">Preprint &middot; March 2026</div>
+      <div class="title">The Missing Memory Hierarchy: Demand Paging for LLM Context Windows &middot; <a href="https://arxiv.org/abs/2603.09023">arXiv:2603.09023</a></div>
+    </div>
+    <div class="recent-card">
+      <div class="meta">Essay &middot; January 2026</div>
+      <div class="title">Premature Collapse is the Root of All Evil &middot; <a href="https://fsgeek.ca/2026/01/24/premature-collapse-is-the-root-of-all-evil/">fsgeek.ca</a></div>
+    </div>
+    <div class="recent-card">
+      <div class="meta">Engagement &middot; March 2026</div>
+      <div class="title">Software-defect litigation, BC Supreme Court (preliminary review)</div>
+    </div>
+  </div>
+</section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <div>
+      <div><a href="mailto:tony@wamason.com">tony@wamason.com</a></div>
+      <div>wamason.com LLC &middot; 614 Nashua St., Unit 139, Milford, NH 03055</div>
+    </div>
+    <nav aria-label="Elsewhere">
+      <a href="https://scholar.google.com/citations?user=-AWzh44AAAAJ">Google Scholar</a> &middot;
+      <a href="https://github.com/fsgeek">GitHub</a> &middot;
+      <a href="https://www.linkedin.com/in/tonymason2">LinkedIn</a> &middot;
+      <a href="https://fsgeek.ca/">fsgeek.ca</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

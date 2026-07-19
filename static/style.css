@@ -1,0 +1,222 @@
+/* wamason.com stylesheet.
+   A restrained, uniform, text-first design: the visual equivalent of a CLI
+   that explains itself. One accent colour, system fonts, generous whitespace,
+   no ornament that does not earn its place. */
+
+:root {
+  --ink: #1a1f2e;
+  --muted: #3f4a5e;
+  --line: #e3e6ec;
+  --accent: #355c8a;
+  --bg-card: #fbfbfc;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, "Segoe UI", system-ui, "Helvetica Neue", sans-serif;
+  color: var(--ink);
+  line-height: 1.6;
+  background: white;
+}
+
+a { color: var(--accent); }
+
+/* Keyboard users can always see where they are: the welcoming-CLI principle. */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  background: var(--accent);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 0 0 6px 0;
+  z-index: 10;
+}
+.skip-link:focus { left: 0; top: 0; }
+
+.container { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+/* Header */
+header { padding: 32px 0; border-bottom: 1px solid var(--line); }
+.header-row { display: flex; justify-content: space-between; align-items: baseline; }
+.brand-name { font-size: 24px; font-weight: 500; }
+.brand-tagline { font-size: 14px; color: var(--muted); margin-top: 2px; }
+nav { font-size: 14px; }
+nav a { color: var(--ink); text-decoration: none; margin-left: 24px; }
+nav a:hover { color: var(--accent); }
+
+/* Hero */
+.hero { padding: 56px 0 40px; max-width: 760px; }
+.hero-lead { font-size: 21px; line-height: 1.5; font-weight: 500; }
+.hero-body { font-size: 17px; line-height: 1.65; color: var(--muted); margin-top: 20px; }
+
+/* Service cards */
+.audience-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 56px;
+}
+.audience-card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 28px 28px 24px;
+  background: var(--bg-card);
+}
+.audience-card h2 { font-size: 18px; font-weight: 500; margin-bottom: 12px; }
+.audience-card p { font-size: 15px; color: var(--muted); margin-bottom: 18px; }
+.audience-card a { text-decoration: none; font-size: 14px; font-weight: 500; }
+.audience-card a:hover { text-decoration: underline; }
+
+/* Credibility strip */
+.credibility-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 56px;
+}
+.credibility-strip .label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.credibility-strip .value { font-size: 15px; font-weight: 500; }
+
+/* Recent */
+.recent-section { margin-bottom: 56px; }
+.recent-section h2 { font-size: 14px; color: var(--muted); margin-bottom: 16px; font-weight: 500; }
+.recent-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.recent-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px 20px;
+}
+.recent-card .meta { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.recent-card .title { font-size: 14px; line-height: 1.5; }
+.recent-card a { text-decoration: none; }
+
+/* Footer */
+footer {
+  padding: 32px 0 48px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+.footer-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+footer a { text-decoration: none; }
+
+/* -- Content pages (consulting, expert, and later about) --------------
+   Reuse .hero from the landing page; everything below is shared by the
+   longer text-first section pages. */
+
+/* The brand name doubles as a home link; the current nav item is accented. */
+.brand-name a { color: inherit; text-decoration: none; }
+.brand-name a:hover { color: var(--accent); }
+nav a[aria-current="page"] { color: var(--accent); }
+
+/* A section is a labelled band separated from the next by a hairline rule. */
+.section { padding: 44px 0; border-top: 1px solid var(--line); }
+.section:first-of-type { border-top: none; padding-top: 8px; }
+.section > h2 { font-size: 20px; font-weight: 500; margin-bottom: 10px; }
+.section-intro { font-size: 16px; color: var(--muted); max-width: 720px; }
+
+/* Plain prose blocks: track record, training, contact. */
+.prose p { font-size: 16px; line-height: 1.65; max-width: 720px; margin-top: 14px; }
+.prose p:first-child { margin-top: 0; }
+
+/* The method: three numbered moves. */
+.moves { list-style: none; counter-reset: move; margin-top: 24px; display: grid; gap: 22px; }
+.moves li { counter-increment: move; position: relative; padding-left: 46px; max-width: 720px; }
+.moves li::before {
+  content: counter(move);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+  font-size: 14px;
+  color: var(--accent);
+}
+.moves h3 { font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+.moves p { font-size: 15px; color: var(--muted); }
+
+/* Proof story: an accented callout. */
+.callout { border-left: 3px solid var(--accent); padding-left: 24px; margin-top: 22px; }
+.callout p { font-size: 16px; line-height: 1.65; max-width: 700px; margin-top: 14px; }
+.callout p:first-child { margin-top: 0; }
+
+/* Service cards: a descriptive 2x2 grid, no links. */
+.service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+.service-card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 24px 26px;
+  background: var(--bg-card);
+}
+.service-card h3 { font-size: 17px; font-weight: 500; margin-bottom: 10px; }
+.service-card p { font-size: 15px; color: var(--muted); }
+
+/* Areas of competence: label plus description rows.
+   Reused by the expert page for technical scope and engagement terms. */
+.competence { margin-top: 22px; display: grid; gap: 18px; }
+.competence .item { max-width: 760px; }
+.competence .label { font-size: 15px; font-weight: 500; }
+.competence .body { font-size: 15px; color: var(--muted); margin-top: 2px; }
+
+/* Engagement shapes: three small bordered cards. */
+.shapes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 22px 0; }
+.shape { border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; }
+.shape .label { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.shape p { font-size: 14px; color: var(--muted); }
+.engagement-note { font-size: 15px; color: var(--muted); max-width: 720px; }
+
+/* Contact call to action. */
+.contact-cta { margin-top: 18px; }
+.contact-cta .email { font-size: 19px; font-weight: 500; text-decoration: none; }
+.contact-cta .email:hover { text-decoration: underline; }
+
+/* Expert page: credibility markers, anonymized case list, patents, books. */
+.record-list { margin-top: 22px; display: grid; gap: 22px; }
+.record-item { border-left: 3px solid var(--accent); padding-left: 24px; max-width: 720px; }
+.record-case { font-size: 16px; font-weight: 500; }
+.record-court { font-size: 13px; color: var(--muted); margin: 2px 0 8px; }
+.record-item p { font-size: 15px; color: var(--muted); }
+
+.case-list { list-style: none; margin-top: 22px; max-width: 760px; }
+.case-list li { padding: 14px 0; border-top: 1px solid var(--line); }
+.case-list li:first-child { border-top: none; }
+.case-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.case-descriptor { font-size: 15px; font-weight: 500; }
+.case-year { font-size: 13px; color: var(--muted); white-space: nowrap; }
+.case-meta { font-size: 14px; color: var(--muted); margin-top: 3px; }
+
+.patent-list { list-style: none; margin-top: 22px; max-width: 760px; }
+.patent-list li { padding: 14px 0; border-top: 1px solid var(--line); }
+.patent-list li:first-child { border-top: none; }
+.patent-head { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.patent-number { font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap; }
+.patent-number:hover { text-decoration: underline; }
+.patent-title { font-size: 14px; }
+.patent-gloss { font-size: 14px; color: var(--muted); margin-top: 3px; }
+
+.book-list { list-style: none; margin-top: 22px; display: grid; gap: 18px; max-width: 760px; }
+.book-title { font-size: 15px; font-weight: 500; }
+.book-meta { font-size: 13px; color: var(--muted); margin: 1px 0 4px; }
+.book-desc { font-size: 14px; color: var(--muted); }
+
+/* Narrow screens: every grid collapses to a single column. */
+@media (max-width: 680px) {
+  .audience-row,
+  .credibility-strip,
+  .recent-cards,
+  .service-grid,
+  .shapes { grid-template-columns: 1fr; }
+  .header-row,
+  .footer-row { flex-direction: column; gap: 12px; align-items: flex-start; }
+  nav a:first-child { margin-left: 0; }
+}
