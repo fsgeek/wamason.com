@@ -145,9 +145,16 @@ URL). Per Tony's decision, these `<img>` tags are removed; surrounding
 prose is untouched. Affected posts: "Why The Narrative Meta-Data Tells..."
 (Part I), "Blockchain: Fad for Innovative Technology?", "Media Recycling in
 the FAT File System", "The Evolution of Copyright Law: From Quill to
-Code" (two of six images). Images hosted on `fsgeek.ca` (Tony's other,
-still-live site) are left as external links, not migrated — they're his
-own content, just not local to this repo.
+Code" (two of six images).
+
+**Own images hosted on fsgeek.ca (rehost, don't hotlink):** "Social Media
+Fraud: Beware the 'Deep Fake'" links 4 images from `fsgeek.ca` — Tony's
+other site, but still his own content and still under his control. Per
+Tony's follow-up decision, these are rehosted rather than left as a
+cross-site hotlink: fetched directly over HTTPS (all 4 confirmed live,
+200 OK, `image/png`, 2026-07-30) and copied into `blog/social-media-fraud-beware-the-deep-fake/`
+alongside that post's page, same treatment as the wamason.com-sourced
+images. `src` attributes are rewritten to the local relative filename.
 
 ## Metadata
 
