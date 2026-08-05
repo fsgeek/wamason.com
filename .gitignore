@@ -1,0 +1,8 @@
+# ignore claude local artifacts
+.claude/
+
+# ignore vs code artifacts
+.vscode/
+
+# ignore tmp artifacts
+tmp/
