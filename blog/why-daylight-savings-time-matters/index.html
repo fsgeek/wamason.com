@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Why Daylight Savings Time Matters &middot; Tony Mason</title>
+  <meta name="description" content="Recently I expressed being unsure of what someone meant when they indicated a meeting time relative to “EST.” I explained that EST is not the same as EDT, and…">
+  <link rel="canonical" href="https://wamason.com/blog/why-daylight-savings-time-matters/">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .post-lead { font-size: 21px; line-height: 1.5; font-weight: 500; max-width: 760px; }
+    .post-meta { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); max-width: 760px; display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: baseline; }
+    .prose p, .prose ul, .prose ol { max-width: 760px; }
+    .prose img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 12px; }
+    .tag { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; white-space: nowrap; border: 1px solid var(--accent); color: var(--accent); }
+    .tag.thin { border-color: var(--line); color: var(--muted); }
+    .tag.draft { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); }
+    .video-embed { position: relative; max-width: 760px; aspect-ratio: 16 / 9; margin-top: 12px; }
+    .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 8px; }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="container header-row">
+    <div>
+      <div class="brand-name"><a href="/">Tony Mason</a></div>
+      <div class="brand-tagline">Technical consulting and expert witness</div>
+    </div>
+    <nav aria-label="Primary">
+      <a href="/consulting/">Consulting</a>
+      <a href="/expert/">Expert witness</a>
+      <a href="https://fsgeek.ca/">Research</a>
+      <a href="/blog/" aria-current="page">Blog</a>
+      <a href="/ayllu/">Ayllu</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+    <section class="hero">
+      <h1 class="post-lead">Why Daylight Savings Time Matters</h1>
+      <p class="post-meta">
+        <span>October 31, 2022</span>
+      </p>
+    </section>
+
+    <section class="section prose">
+<p>Recently I expressed being unsure of what someone meant when they indicated a meeting time relative to “EST.” I explained that&nbsp;<strong>EST</strong>&nbsp;is not the same as&nbsp;<strong>EDT</strong>, and since I’m not in either of those time zones, I suspected they&nbsp;<em>said&nbsp;</em>EST when they&nbsp;<em>meant&nbsp;</em>EDT. They accused me of being “pedantic.”</p>
+
+<p>They are right: the type of forensic analysis that I am called upon to do&nbsp;<strong>relies</strong>&nbsp;upon the pedantic behavior of computers. They do&nbsp;<em>exactly</em>&nbsp;what we tell them to do. I (and other forensic analysts) need this high degree of reliable reproducibility to understand when things do not match the expected pattern. One name for this in computer security is “anomaly detection.’</p>
+
+<p>At the present time, as far as I can tell, every region in the eastern time zone is&nbsp;<em>either</em>&nbsp;on “standard time”&nbsp;<em>or</em>&nbsp;“daylight time.” Thus, it is possible to disambiguate when someone uses the wrong designation. For those of you who are confused:&nbsp;<strong>EST</strong>&nbsp;means&nbsp;<strong>Eastern Standard Time</strong>&nbsp;and is defined as being UTC (Universal Coordinated Time) – 5 hours. So when it is 11 am UTC, I can quickly compute the time EDT: I subtract 5 hours from it (6 am EST).&nbsp;<strong>On the other hand, EDT</strong>&nbsp;means&nbsp;<strong>Eastern Daylight Time</strong>&nbsp;and is defined as being UTC – 4 hours. Thus, 6 am EST is 7 am EDT.</p>
+
+<p>You might think, “pfft, none of this makes&nbsp;<em>any</em>&nbsp;difference since a reasonable person would know what I mean even if I use the wrong timezone.” Except some regions do not change timezones throughout the year (ostensibly to “save daylight.”) For example, some US states don’t switch – Arizona, for example, which uses MST (Mountain Standard Time) year-round, at least for now. At one point, Indiana did require the use of daylight time during the summer. When I don’t live in&nbsp;<em>your</em>&nbsp;timezone, it seems unreasonable for you to demand that I know your timezone rules. Further, when I’m doing forensics, why would I remember that Indiana didn’t require using CDT in the summer from 1953 to 2006? So, yes, I am pedantic about this.</p>
+
+<p><strong>Computers&nbsp;</strong>are even more pedantic than I am. When writing software in the late 1970s, I was careful to ensure my code would compute&nbsp;<em>leap years</em>&nbsp;correctly for centuries ahead. These details were (and are) important to me. Working with operating systems has made me&nbsp;<em>more</em>&nbsp;attentive to these details, not less, since the operating system is generally a definitive source of “truth” concerning precisely these types of details. File systems, for example, preserve timestamps. Early file systems had limited space for storing timestamps and might choose not to store high precision times valid for millennia. For example, FAT stores times relative to January 1, 1980. Further, it captures them relative to the time zone of the system where they were captured. FAT has limited granularity for different timestamps as well:</p>
+
+<ul>
+<li>Creation timestamps can be accurate to 10 milliseconds.</li>
+
+<li>Modified timestamps are accurate to two&nbsp;<em>seconds</em>.</li>
+
+<li>Accessed timestamps are accurate to the&nbsp;<em>day</em>.</li>
+</ul>
+
+<p>As storage space has become more plentiful, we have used more extensive and higher-accuracy timestamps. The NTFS file system (Windows) uses 64-bit timestamps counting the number of 100&nbsp;<em>nanoseconds</em>&nbsp;since January 1, 1601. Ext4 (commonly used by Linux) has nanosecond resolution with dates between December 14, 1901, and May 10, 2446. Of course, high precision does not mean the computer system on which the data was recorded was capable of such precision, nor does it even mean the time on the computer was set correctly.</p>
+
+<p>So, what does this have to do with computer forensics? Although file system timestamps can be faked, it is surprisingly difficult for&nbsp;<em>humans</em>&nbsp;to do so because – unlike computers – humans tend to overlook minor variations. For example, EST versus EDT might not be something humans consider. They might not think that one day was EDT and another day EST. This becomes more interesting when we consider that different<em>&nbsp;software layers</em>&nbsp;might be recording timestamps. What is particularly useful here is that the source of the timestamps is likely the same (e.g., the operating system), and thus, the recorded result should be the same – or at least within some small window of time. If I see timestamps that are off by&nbsp;<strong>one hour</strong>, I often ask if they have been modified manually.</p>
+
+<p>For example, I have talked about the importance of meta-data in&nbsp;<em>pictures</em>&nbsp;(see “<a target="_blank" href="https://wamason.com/2021/11/15/meta-data/" rel="noreferrer noopener">Why Metadata matters</a>&nbsp;“) because both the software used to edit a picture and the file system that stores it independently record the timestamps. Knowing what ordinarily happens when a file is edited means that these timestamps become a form of “smoking gun” when what I see does&nbsp;<em>not</em>&nbsp;match what I should see. Of course, timestamp variance is not definitive evidence of malicious behavior. That is why part of my work is to reproduce the&nbsp;<em>expected</em>&nbsp;behavior&nbsp;<em>in situ</em>&nbsp;but also to consider other possible actions.</p>
+
+<p>Doing this relies upon understanding what&nbsp;<strong>should</strong>&nbsp;happen and then reasoning about this. Since I have extensive experience in file systems implementation, development, analysis, and debugging, I have good intuition about what&nbsp;<em>should</em>&nbsp;happen. But, of course, I still make sure to confirm my expectations because that strengthens the persuasiveness of my observations and conclusions.</p>
+
+<p>File systems, in particular, can be quite challenging to analyze thoroughly. For example, the FAT file system&nbsp;<em>format</em>&nbsp;is a well-documented, well-understood on-media format. However, the&nbsp;<em>way</em>&nbsp;that format is manipulated can vary dramatically by the implementation. As an expert, I know it is important to consider not only the on-media format but&nbsp;<em>also</em>&nbsp;the implementation of the file system. The FAT file system implementation in Windows is (fortunately) publicly available because Microsoft distributes its source code as an example. The behavior of that implementation is quite different than the implementation of the&nbsp;<em>same</em>&nbsp;media format (FAT) inside a different device, such as a camera.</p>
+
+<p>Why? Well, the FAT file system in Windows comes from a historical background in which it was used as the primary file system. Thus, performance was definitely important, including&nbsp;<em>parallel</em>&nbsp;performance – where multiple application programs were reading from and writing to the file system simultaneously. Therefore, the FAT&nbsp;<em>implementation</em>&nbsp;on Windows has a robust mechanism for allowing more significant parallel activity, minimizing unnecessary I/O operations, etc. For example, FAT on Windows&nbsp;<em>does not zero out storage space when allocated</em>. Instead, internally it tracks the “valid data length” and zeros out assigned but unwritten file regions when the file is&nbsp;<em>closed</em>. This differs from NTFS, which stores the “valid data length” as part of the file meta-data. In either case, the goal is the same: ensure that the data previously stored on the media at that location is not exposed when the media is being re-used. Zero-filling that media is one way of accomplishing this, but it is wasteful because, almost always, an application writes over the newly allocated data region.</p>
+
+<p>On the other hand, a camera does not worry about “multiple simultaneous users” because there’s exactly one thing using the media: the camera. Similarly, the camera doesn’t worry about zeroing out media at any point in time – it knows that it will write out the data as part of its work. Therefore, the camera will have a simple block allocation strategy (because there’s no need for good parallelism.) Instead, the FAT implementation in the camera will be as simple as possible since a camera usually has less memory and processor power than a general-purpose computer.</p>
+
+<p>This behavior difference also works for timestamps. When I edit a picture&nbsp;<em>on the camera</em>, it won’t behave the same. That’s because the reliability model for the camera is much lower than it is for our general-purpose computer. The general-purpose computer has a common paradigm for “editing a file,” and it does not behave at all like what users think happens. The application starts by creating a&nbsp;<em>new</em>&nbsp;copy of the file. Maybe you have seen these files, where they have strange names or similar names with quirky characters (the ~ is a common one that I have seen used.) When you “save’ the file, what happens is that it writes the data out to the&nbsp;<em>new</em>&nbsp;copy of the file, and then it asks the operating system to replace the old file with the new file. On Windows, the&nbsp;<em>file system</em>&nbsp;will note that this replacement is happening and will&nbsp;<em>move attributes</em>&nbsp;from the old file to the new one. This means you will see the “creation time” of the file is preserved. That logic is clearly visible in Microsoft’s&nbsp;<a target="_blank" href="https://github.com/microsoft/Windows-driver-samples/tree/main/filesys/fastfat" rel="noreferrer noopener">FAT file system code</a>. You won’t find that sort of functionality in the camera implementation of FAT – it has nothing to do with the on-media format. It is instead tied to the behavior of the operating system.</p>
+
+<p>So, when I was looking at metadata in the file system and comparing it to metadata in the file itself, I was relying on my understanding that the software used (Adobe Photoshop Elements 3.0) was running on&nbsp;<em>Windows</em>. Thus, I know that this “preserve the creation timestamp” would have been implemented&nbsp;<em>by FAT</em>, but I also know that Adobe has no such mechanism.</p>
+
+<p>Thus, I may be pedantic when I look at timestamps and consider time zones, but I do that because it is <em>essential</em>. Humans have a tough time reproducing the exact behavior of pedantically precise behavior of the Windows system itself. I must understand the distinction between <em>daylight</em> time and <em>standard</em> time because <strong>it matters<em>. </em></strong>When I find metadata that does not match the expected pattern, I dig deeper: why is it different? What could cause that sort of anomaly?</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <div>
+      <div><a href="mailto:tony@wamason.com">tony@wamason.com</a></div>
+      <div>wamason.com LLC &middot; 614 Nashua St., Unit 139, Milford, NH 03055</div>
+      <div><a href="/privacy/">Privacy &amp; terms</a></div>
+    </div>
+    <nav aria-label="Elsewhere">
+      <a href="https://scholar.google.com/citations?user=-AWzh44AAAAJ">Google Scholar</a> &middot;
+      <a href="https://github.com/fsgeek">GitHub</a> &middot;
+      <a href="https://www.linkedin.com/in/tonymason2">LinkedIn</a> &middot;
+      <a href="https://fsgeek.ca/">fsgeek.ca</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What does it mean to be a &quot;duplicate&quot;? &middot; Tony Mason</title>
+  <meta name="description" content="One of my recent projects asked me to look at the logic within a software package that took data from multiple sources, stored it in a database, and then…">
+  <link rel="canonical" href="https://wamason.com/blog/what-does-it-mean-to-be-a-duplicate/">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .post-lead { font-size: 21px; line-height: 1.5; font-weight: 500; max-width: 760px; }
+    .post-meta { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); max-width: 760px; display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: baseline; }
+    .prose p, .prose ul, .prose ol { max-width: 760px; }
+    .prose img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 12px; }
+    .tag { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; white-space: nowrap; border: 1px solid var(--accent); color: var(--accent); }
+    .tag.thin { border-color: var(--line); color: var(--muted); }
+    .tag.draft { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); }
+    .video-embed { position: relative; max-width: 760px; aspect-ratio: 16 / 9; margin-top: 12px; }
+    .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 8px; }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="container header-row">
+    <div>
+      <div class="brand-name"><a href="/">Tony Mason</a></div>
+      <div class="brand-tagline">Technical consulting and expert witness</div>
+    </div>
+    <nav aria-label="Primary">
+      <a href="/consulting/">Consulting</a>
+      <a href="/expert/">Expert witness</a>
+      <a href="https://fsgeek.ca/">Research</a>
+      <a href="/blog/" aria-current="page">Blog</a>
+      <a href="/ayllu/">Ayllu</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+    <section class="hero">
+      <h1 class="post-lead">What does it mean to be a &quot;duplicate&quot;?</h1>
+      <p class="post-meta">
+        <span>August 18, 2023</span> <span class="tag thin">Litigation</span>
+      </p>
+    </section>
+
+    <section class="section prose">
+<p>One of my recent projects asked me to look at the logic within a software package that took data from multiple sources, stored it in a database, and then provided curated access to the information so that only a <strong>single</strong> version of "duplicate entries" would be appropriately represented. As I worked through explaining this to the relevant lawyers in this case, I realized that such a simple question is quite challenging. As is often the case in computer technology cases, Randall Munroe has an apt cartoon capturing the quintessential essence of this particular question:</p>
+
+<figure class="size-full is-resized"><img src="image.png" alt="XKCD 1425." class="wp-image-2969" style="width:297px" width="297"/><figcaption class="wp-element-caption"><a href="https://xkcd.com/1425/" target="_blank" rel="noopener nofollow" title="">Tasks</a></figcaption></figure>
+
+<p>In my formative years, I had&nbsp;<a target="_blank" href="https://en.wikipedia.org/wiki/Paul_Sally" rel="noreferrer noopener">Paul Sally</a>&nbsp;as an instructor for some of my classes. One thing I remember from that time was some of his work related to&nbsp;<em>Lie Algebras</em>&nbsp;and&nbsp;<em>Fuzzy Sets</em>&nbsp;(and my Google search today indicates work in&nbsp;<em>L</em>-fuzzification. These are integral parts of&nbsp;<a target="_blank" href="https://en.wikipedia.org/wiki/Fuzzy_mathematics" rel="noreferrer noopener">Fuzzy Mathematics</a>. This type of mathematics is quite important today because it relates to&nbsp;<em>Similarity Analysis.</em>&nbsp;When we deduplicate complex data, it is a study in understanding similarity - but I get ahead of myself. If you are interested in the link,&nbsp;<a target="_blank" href="https://link.springer.com/chapter/10.1007/978-0-387-34910-7_16" rel="noreferrer noopener"><em>Fuzzy Logic for Similarity Analysis</em></a>&nbsp;is one academic paper that discusses this (though there are others.) Thus, when asked about data deduplication, it reminded me of this earlier work I had learned about as an undergraduate mathematics student.</p>
+
+<p>Let's start more simply, though. The simplest model of similarity would be to observe that two identical objects are similar. In other words, the strings "foo" and "foo" are the same.</p>
+
+<p>At this point, you likely think I have demonstrated an amazing grasp of the obvious. Of&nbsp;<em>course</em>, these are the same thing. Let's suppose, instead, that our strings were "Foo" and "foo". Are these duplicates?&nbsp;<em>Maybe</em>. How do we define when something is a duplicate? Perhaps we broaden our definition so that we are&nbsp;<em>case insensitive</em>. This is straightforward for some alphabets but becomes more complicated when we expand the alphabet.&nbsp;<a target="_blank" href="https://www.w3.org/International/wiki/Case_folding" rel="noreferrer noopener">W3C&nbsp;</a>(the folks that establish the standards for the World Wide Web) defines case folding as it applies to web addresses. This is notable because web addresses&nbsp;<strong>are case-insensitive</strong>. Thus "https://www.wamason.com" and "https://WWW.WAMason.com" are&nbsp;<strong>the same</strong>. Yet, even this simple example can be more complex because only the&nbsp;<em>internet</em>&nbsp;part of the name is guaranteed to be case insensitive. When you use a name that is relative to the&nbsp;<em>web server</em>, then it&nbsp;<em>might</em>&nbsp;be case-sensitive. For example, my CV is currently at https://wamason.com/wp-content/uploads/2022/01/wamason-expert-2022-01-05.pdf. If I also list HTTPS://WAMASON.COM/wp-content/uploads/2022/01/wamason-expert-2022-01-05.pdf, you reach the same file. However, if the case changes in the part of the name the web server interprets, it may not be. https://wamason.com/Wp-content/uploads/2022/01/wamason-expert-2022-01-05.pdf will generate a "file not found' error, even though I only changed&nbsp;<strong>a single character</strong>&nbsp;of the name.</p>
+
+<p>So, this is an example of how "duplicates" can be pretty subtle to determine. If one link&nbsp;<em>works</em>&nbsp;and the second&nbsp;<em>does not</em>, I can assert these are not duplicates. If they lead to the same&nbsp;<em>object</em>, I could argue they are duplicates. For the record, case sensitivity appears because my blog is hosted on a Linux-based server running WordPress, with a case-sensitive file system. If this were on a Windows server with a Windows-based implementation of WordPress, those two links&nbsp;<strong>would be identical<em>.</em></strong></p>
+
+<p>Ah, this "duplicate" concept isn't quite so easy, is it?</p>
+
+<p>The case that inspired this post today was about&nbsp;<em>database records</em>. Product information was retrieved from multiple different providers. The product information might describe the&nbsp;<strong>same product</strong>&nbsp;even though the details of the information vary slightly. This sort of data aggregation is common, and one of the challenges is to "eliminate duplicates." How do we define what a duplicate is? In the case of websites, we&nbsp;<em>could</em>&nbsp;see where the names lead, and if they lead to the same object, we could argue they are duplicates. However, this turns out to be potentially expensive. Suppose, for example, the links point to large files. I do not want to fetch those large files to verify they are identical. If I were ordering&nbsp;<em>products</em>, I might not want to order copies of two products I think&nbsp;<em>might</em>&nbsp;be duplicated to determine if they are&nbsp;<em>actually</em>&nbsp;duplicates. Thus, the cost of confirming two things are aliases for the same object or two instances of the same "thing" may be too high. Instead, I must heuristically determine if two descriptions will likely be duplicates.</p>
+
+<p>This is not a deterministic process: we must realize that any heuristic will often generate both type 1 (false positive) and type 2 (false negative) errors. Our goal is to find the right balance between these two extremes. We typically use the concept of "distance" to see how "similar" two things are. Distance relates to the field of&nbsp;<em>measure theory</em>&nbsp;and is often realized with "metric spaces" (multi-dimensional spaces where we have a concept of distance.) One of the most straightforward metrics is the "trivial metric," which is what I first proposed: "foo" = "foo" and "Foo" != "foo". Thus the distance between two objects is either 0 ("identical") or 1 ("different"). That's easy for us to reason about but is not helpful for cases I described earlier, where things should be considered the "same" despite minor differences. When we generalize distance, we measure "how far" between two things. This idea of "how far" is our&nbsp;<em>metric</em>. We use some function to define this. In a single-dimensional space, this is typically just a number. We usually use the Euclidean metric when we generalize this to multiple dimensions. See&nbsp;<a target="_blank" href="https://en.wikipedia.org/wiki/Euclidean_distance" rel="noreferrer noopener">Euclidean Distance</a>. These metrics are surprisingly general. Shashwat Tiwari has an excellent Blog post on several practical distance metrics (including those for discrete sets):&nbsp;<a target="_blank" href="https://medium.com/geekculture/7-important-distance-metrics-every-data-scientist-should-know-11e1b0b2ebe3" rel="noreferrer noopener">7 Important Distance Metrics every Data Scientist should know</a>.</p>
+
+<p>From here, we can dive into "machine learning" (for example). A common approach in machine learning is to group "similar things" into distinct groups. I don't want to get too far into the weeds, but if you are interested in why&nbsp;<em>similarity</em>&nbsp;is important more broadly, read up on "<a target="_blank" href="https://deepai.org/machine-learning-glossary-and-terms/hyperplane" rel="noreferrer noopener">Hyperplanes</a>."</p>
+
+<p>Let's get back to our original string-oriented problem. Perhaps you have found websites that detect when you misspell things or suggest completion strings. The idea here is to compute "string similarity," which uses&nbsp;<a target="_blank" href="https://en.wikipedia.org/wiki/Levenshtein_distance" rel="noreferrer noopener">Levenshtein Distance</a>. When we consider multiple strings - like database records with comparable fields - we can combine distance metrics, such as by using Levenshein string similarity on the individual fields of a database record and then combining them using a Euclidean distance computation (or others like&nbsp;<a target="_blank" href="https://towardsdatascience.com/9-distance-measures-in-data-science-918109d069fa" rel="noreferrer noopener">Hamming or Minkowski</a>&nbsp;distances.)</p>
+
+<p>Did I mention how&nbsp;<em>complicated</em>&nbsp;this becomes?</p>
+
+<p>Thus, my point is that identifying "duplicates" when you have multiple data sources is a challenging problem. In litigation, this can become an issue when the implementation is complex, the data sources vary, and the&nbsp;<em>meaning&nbsp;</em>of "duplicate" is not easily defined. We can make this work given a static data set, but data sources are constantly evolving and changing in the real world. This often means that software developers are called upon to solve a&nbsp;<em>very</em>&nbsp;complex problem, directed by non-technical management that does not understand the problem's complexity.</p>
+
+<p></p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <div>
+      <div><a href="mailto:tony@wamason.com">tony@wamason.com</a></div>
+      <div>wamason.com LLC &middot; 614 Nashua St., Unit 139, Milford, NH 03055</div>
+      <div><a href="/privacy/">Privacy &amp; terms</a></div>
+    </div>
+    <nav aria-label="Elsewhere">
+      <a href="https://scholar.google.com/citations?user=-AWzh44AAAAJ">Google Scholar</a> &middot;
+      <a href="https://github.com/fsgeek">GitHub</a> &middot;
+      <a href="https://www.linkedin.com/in/tonymason2">LinkedIn</a> &middot;
+      <a href="https://fsgeek.ca/">fsgeek.ca</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

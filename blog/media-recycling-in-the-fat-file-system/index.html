@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Media Recycling in the FAT File System &middot; Tony Mason</title>
+  <meta name="description" content="I recently was asked to look at specific findings of other forensic experts related to the &quot;recovery of deleted flies.&quot; Another expert found specific behavior…">
+  <link rel="canonical" href="https://wamason.com/blog/media-recycling-in-the-fat-file-system/">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .post-lead { font-size: 21px; line-height: 1.5; font-weight: 500; max-width: 760px; }
+    .post-meta { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); max-width: 760px; display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: baseline; }
+    .prose p, .prose ul, .prose ol { max-width: 760px; }
+    .prose img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 12px; }
+    .tag { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; white-space: nowrap; border: 1px solid var(--accent); color: var(--accent); }
+    .tag.thin { border-color: var(--line); color: var(--muted); }
+    .tag.draft { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); }
+    .video-embed { position: relative; max-width: 760px; aspect-ratio: 16 / 9; margin-top: 12px; }
+    .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 8px; }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="container header-row">
+    <div>
+      <div class="brand-name"><a href="/">Tony Mason</a></div>
+      <div class="brand-tagline">Technical consulting and expert witness</div>
+    </div>
+    <nav aria-label="Primary">
+      <a href="/consulting/">Consulting</a>
+      <a href="/expert/">Expert witness</a>
+      <a href="https://fsgeek.ca/">Research</a>
+      <a href="/blog/" aria-current="page">Blog</a>
+      <a href="/ayllu/">Ayllu</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+    <section class="hero">
+      <h1 class="post-lead">Media Recycling in the FAT File System</h1>
+      <p class="post-meta">
+        <span>June 7, 2023</span>
+      </p>
+    </section>
+
+    <section class="section prose">
+<p>I recently was asked to look at specific findings of other forensic experts related to the "recovery of deleted flies." Another expert found specific behavior highly suspicious, but after a careful review, I concluded that this was more an artifact of&nbsp;<em>how</em>&nbsp;file systems recycle media. In this post, I will walk through my logic in hopes it will be helpful to others working to understand how FAT works and the limitation of data recovery.</p>
+
+<p>First, an important point to remember is that file systems are traditionally lazy about cleaning deleted space. The&nbsp;<strong>naïve</strong>&nbsp;way to think of this is that when we delete a file, we zero out the disk space. However, that turns out to be&nbsp;<em>extremely&nbsp;</em>expensive. Many years ago, we had a project that involved mixing meta-data management, done by a single computer, and data management, done by multiple computers. When one computer wanted to write&nbsp;<em>data</em>&nbsp;to the file, it would first adjust the&nbsp;<em>size</em>&nbsp;of the file by asking the meta-data managing computer to extend the allocated space of the file. We found that when we did this&nbsp;<em>over the network</em>&nbsp;(using the CIFS/SMB network protocol), the meta-data managing computer would zero-fill the entire file. The request would always fail at a specific size (around 1.8GB, as I recall). A timeout caused this failure - the SMB protocol would only wait for a response for some time, after which it would declare the operation had failed, and the client computer would "give up." This was because the time it takes to zero out that much space was longer than the timeout value! Our solution to this was intriguing: we added a "filter" on the drive where the file system for the meta-data managing computer was located and threw away any requests to zero out data blocks on the drive. We knew this was "safe enough" because our client, in turn, would write the data to those regions as soon as the allocation was completed.</p>
+
+<p>Our system ran on top of a shared storage mechanism (fiber channel) that permitted multiple computers to access the same storage. We used the meta-data management computer to "partition" the space. Once partitioned, it was safe for the client to write directly to the disk. This provided several benefits, not the least of which is better parallel I/O activity.</p>
+
+<p>This project<em>&nbsp;</em>explains&nbsp;<em>why</em>&nbsp;we do not routinely scrub disk storage: it is expensive and, in most cases, unnecessary. In recent years storage devices have changed so that file systems can note that a block has been freed, which permits the media to handle the dynamic zeroing operation (e.g., the&nbsp;<a target="_blank" href="https://en.wikipedia.org/wiki/Trim_(computing)" rel="noreferrer noopener">ATA TRIM command</a>.) Similarly, FAT file system implementations generally do not zero out files when they are deleted. To better understand this, we will look at the key FAT data elements involved: the&nbsp;<em>directory entry</em>&nbsp;and the&nbsp;<em>file allocation table</em>.</p>
+
+<figure class="size-large"></figure>
+
+<p>The FAT file system connects the allocated storage of a file by inserting the index of the first block of storage in the file. Each block is some uniform size (usually referred to as the&nbsp;<em>cluster</em>&nbsp;size), and there is a table that tracks the allocation of each block in a chain.</p>
+
+<p>Thus, the directory table entry for a file has a&nbsp;<em>first cluster number</em>, which represents a block of storage on the media and a corresponding entry in the&nbsp;<em>file allocation tabl</em>e. The entry in the file allocation table then points to the&nbsp;<em>next block</em>&nbsp;of storage allocated to the file. When there are no more blocks, a distinguished value is used to indicate no more blocks. In addition, the&nbsp;<em>file size</em>&nbsp;is also part of the directory entry, so we know how much data is valid (anything beyond the size is "slack space" and may contain garbage though Windows seeks to fill it with zero data to ensure that a user won't see some old data within the block.) Since FAT does not offer multi-user security, zeroing slack (unused) space in the final block is not required - and is typically omitted by simple FAT implementations.</p>
+
+<p>Of course, when new media is formatted, most of the space is&nbsp;<em>free</em>. There is a list of free blocks using the same mechanism. Here is where things get interesting: the Windows implementation of FAT attempts to allow some level of parallel allocation. The Windows kernel has a concept of&nbsp;<em>map control blocks</em>&nbsp;(see&nbsp;<a target="_blank" href="https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-_fsrtl_advanced_fcb_header-fsrtlinitializelargemcb" rel="noreferrer noopener">FsRtlIntializeLargeMcb</a>&nbsp;for a breadcrumb to the various functions for managing MCBs), which is used in the FAT file system to manage space allocation. This is because, for Windows, parallel access to the allocation data was important. In a simple device, such as a camera, there is no parallel access - the camera is the only thing accessing the FAT media, thus keeping this implementation simple. This often means that for Windows, FAT storage space is recycled in a highly varied fashion. A simple FAT implementation, however, often frees space by inserting it at the front of the free list and then allocating new space from the front of said list. There might be reasons&nbsp;<em>not</em>&nbsp;to do this (e.g., wear leveling), but it turns out that modern flash media typically implements wear leveling in the hardware, and thus there is no reason for the software to care.</p>
+
+<p>Why does this&nbsp;<em>matter</em>? Because it means that, with a high likelihood, if you delete a picture, the space allocated on the media for that file will be pushed to the front of the free list. The next time you take a picture, the software on the camera will reuse those blocks because it just pulls them from the free list. Ordinarily, this is not an issue for anyone. Still, for someone performing forensics, it means that if you find a deleted image, the&nbsp;<em>directory table entry</em>&nbsp;will still be pointing at the media block used when that file existed. Thus, we end up with a situation where an old file looks like it points to the contents of a new file. If these files are of very different types, say a Word document and a cat video, this situation is relatively easy to identify because Word won't understand the cat video, and the video software won't understand the Word file. However, for a camera, it is often the case that the pictures it captures will be pretty similar. Thus, this can lead to a situation where a deleted file, found in the directory table with a filename that starts with the invalid character (meaning "this entry is not currently in use"), has a first cluster value that points to&nbsp;<em>something</em>.</p>
+
+<p>Sometimes that&nbsp;<em>something</em>&nbsp;will be another image. Thus, a forensic examiner needs to remember that what they are looking at&nbsp;<em>might</em>&nbsp;be the old contents of that now deleted file, but then again, it&nbsp;<em>might not</em>&nbsp;be. If we recover the data contents, we may find it is the same as some other active file. This does not indicate anything wrong: it is inherent in how the FAT file system works. While we can sometimes infer information from "recovered" data from a FAT-formatted media device, we must be cautious about drawing firm conclusions. This is why I ended up disagreeing with the other forensic examiner's claim that someone had tampered with the evidence: no tampering was required to be able to observe precisely this behavior.</p>
+
+<p>Ultimately, it is vitally important that anyone performing such forensic investigation of media understand the on-disk format. Having additional insight into how different systems&nbsp;<em>implement</em>&nbsp;that on-disk format can be important in understanding the device's state. This is particularly important when considering portable media since it may be modified by different devices, each of which might implement their functionality differently. This is acceptable: the on-disk format only defines the format of valid state for information stored on the media (e.g., a "consistent state" for the given file system) but does not dictate a specific implementation of that behavior. As an investigator, it is&nbsp;<strong>also</strong>&nbsp;crucial that we always strive to keep an open mind. In this case, I had to ask myself: "Could this have happened in some other way&nbsp;<em>other than</em>&nbsp;what the other expert said must have happened." We all have biases, but as experts, part of our job is to control for those biases to minimize the likelihood that we will "see what we want to see."</p>
+
+<p>In this case, I had to notify the client that I disagreed with the other expert's analysis. They were gracious about it but did not use my services further on the case. I do not take this personally: I did my job. I did not tell the client what they wanted to hear, but I gave them an opinion based on my analysis and understanding of the underlying system. My integrity is more important than delivering incorrect information to my client since I always have to be willing to defend my findings. None of us like to be wrong, but sometimes we can miss something. The nature of expert work in forensics is to look at these details and see if we can exclude other possibilities. Then, as Sherlock Holmes says: "<em>When you have eliminated the impossible,&nbsp;</em><strong><em>whatever remains, however improbable, must be the truth</em></strong><em>."</em></p>
+
+<p></p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <div>
+      <div><a href="mailto:tony@wamason.com">tony@wamason.com</a></div>
+      <div>wamason.com LLC &middot; 614 Nashua St., Unit 139, Milford, NH 03055</div>
+      <div><a href="/privacy/">Privacy &amp; terms</a></div>
+    </div>
+    <nav aria-label="Elsewhere">
+      <a href="https://scholar.google.com/citations?user=-AWzh44AAAAJ">Google Scholar</a> &middot;
+      <a href="https://github.com/fsgeek">GitHub</a> &middot;
+      <a href="https://www.linkedin.com/in/tonymason2">LinkedIn</a> &middot;
+      <a href="https://fsgeek.ca/">fsgeek.ca</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

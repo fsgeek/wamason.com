@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Effective Mechanisms for Authorship Determination &middot; Tony Mason</title>
+  <meta name="description" content="Recently one of my clients contacted me and asked about what I know concerning &quot;determining authorship.&quot; I pointed out that I have a published paper on the…">
+  <link rel="canonical" href="https://wamason.com/blog/effective-mechanisms-for-authorship-determination/">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .post-lead { font-size: 21px; line-height: 1.5; font-weight: 500; max-width: 760px; }
+    .post-meta { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); max-width: 760px; display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: baseline; }
+    .prose p, .prose ul, .prose ol { max-width: 760px; }
+    .prose img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 12px; }
+    .tag { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; white-space: nowrap; border: 1px solid var(--accent); color: var(--accent); }
+    .tag.thin { border-color: var(--line); color: var(--muted); }
+    .tag.draft { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); }
+    .video-embed { position: relative; max-width: 760px; aspect-ratio: 16 / 9; margin-top: 12px; }
+    .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 8px; }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="container header-row">
+    <div>
+      <div class="brand-name"><a href="/">Tony Mason</a></div>
+      <div class="brand-tagline">Technical consulting and expert witness</div>
+    </div>
+    <nav aria-label="Primary">
+      <a href="/consulting/">Consulting</a>
+      <a href="/expert/">Expert witness</a>
+      <a href="https://fsgeek.ca/">Research</a>
+      <a href="/blog/" aria-current="page">Blog</a>
+      <a href="/ayllu/">Ayllu</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+    <section class="hero">
+      <h1 class="post-lead">Effective Mechanisms for Authorship Determination</h1>
+      <p class="post-meta">
+        <span>February 18, 2022</span> <span class="tag thin">Copyrights</span>
+      </p>
+    </section>
+
+    <section class="section prose">
+<p>Recently one of my clients contacted me and asked about what I know concerning "determining authorship." I pointed out that I have a published paper on the subject (<a href="https://arxiv.org/pdf/1812.00276" target="_blank" rel="noreferrer noopener">Plagiarism Reduction</a>). An integral part of doing that work was learning how the tools we use to detect plagiarism actually work. But, of course, my work was about <em>code</em> plagiarism (a common problem in education and my practice) and not <em>prose</em> plagiarism. The case my client asked about was attempting to determine the authorship of a written work. The facts of the case involve collaboration between a group of authors that is being unravelled (by lawyers, of course). Thus the question arose if there is a way to automatically identify which sections were written by which authors</p>
+
+<p id="block-5e8e82c8-4873-4a3a-b444-c77437b9db32">Thus, I agreed to write about this area to provide some background and point to potential tools. First, I want to touch on the fundamental reason this becomes a <em>legal</em> issue: any work of authorship, whether it is for entertainment, business, course work, or a computer program, comes with a significant right: <em>Copyright</em>. While the laws about copyright vary somewhat from country to country, overall, there is pretty broad agreement about these rights and their international interpretation. This is based upon an agreement (the "<a href="https://www.wipo.int/treaties/en/ip/berne/" target="_blank" rel="noreferrer noopener">Berne Convention</a>") first signed in 1886, though amended over the past few years. Since most of my work is in the United States, I am most familiar with Copyright law from a U.S. perspective. Copyright protects a <em>specific expression</em>. In that regard, it is a narrow intellectual property right. Thus, if we each write a piece of computer software that does the same thing, we would each have a copyright on our implementation. If part of the code turns out to be the same, that could be because there's only one way to express something, or it could be since one of us copied it from the other.</p>
+
+<p id="block-a84134ea-79b6-4829-b35f-e0db74242d42">How do we tell when "identical" copyright material is, in fact, the same? Suppose I write a computer program in <a href="https://en.wikipedia.org/wiki/Fortran" target="_blank" rel="noreferrer noopener">FORTRAN</a>. In that case, I then use a unique piece of software called a <em>compiler</em> that translates the instructions in the programming language into instructions that the processor in the computer understands. The <em>compiled</em> version of my program is a <em>derivative work</em>. The rights of the original author are not eliminated in the derivation process. This is important because software, in particular, is often re-used. Indeed <em>used</em> software is generally better than <em>new</em> software because the latter is more likely to contain errors ("bugs") that will need to be found and fixed.</p>
+
+<p id="block-46c4bb31-6b57-4b81-ab6c-cf109c074000">Thus, we usually consider the compiled version of the computer program to be "the same." A small change to a literary work does not eliminate the copyright. We'd consider them to be "the same" even though they are not strictly identical. So, when we're trying to figure out <em>who</em> wrote something, the question becomes how to determine that. A wealth of techniques have been developed over the years to do authorship analysis. These are motivated by historical concerns (e.g., "who wrote this anonymous text,") legal concerns ("is this the same code,") and authorship questions ("did the student submit work they copied from elsewhere.")</p>
+
+<p id="block-4bf740b6-53e7-454a-81a6-9b23c6e493ca">Commercial services, such as <a href="https://www.turnitin.com/" target="_blank" rel="noreferrer noopener">Turnitin</a> and <a href="https://www.grammarly.com/">Grammarly</a>, have productized some of the techniques that have been developed over the years and can draw upon a plethora of public and private sources, so they can take a written work and map it to other examples they have seen previously. For instance, in the <a href="https://omscs.gatech.edu/cs-6200-introduction-operating-systems">CS 6200 course at Georgia Tech</a>, which is the one where I implemented the plagiarism reduction intervention that was effective, we used a well-known tool called <a href="http://theory.stanford.edu/~aiken/moss/" target="_blank" rel="noreferrer noopener">MOSS </a>("Measure of Software Similarity"). MOSS uses an interesting technique: it compares the program's <em><a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree" target="_blank" rel="noreferrer noopener">abstract syntax tree</a></em> against other implementations. Doing this strips away the elements that are not germane to the program and instead focuses on <em>what the program does</em> as captured by the signature of the abstract syntax tree (AST). Once a piece of software source code is "big enough," it becomes possible to say that matches in the ASTs are unlikely to be coincidental. So, small bits of code can be identical, but one cannot conclude much. However, when we have 100+ of those small bits of code, and it turns out that 50% of the code has the same AST, then we have strong evidence of shared heritage.</p>
+
+<p id="block-6155463b-047b-4f9e-ab05-dcddc8d6b3d5">One approach I have seen in more traditional literary works is similar to this AST style comparison, but it is not the only technique. Since I periodically review the literature on this topic, I took this opportunity to highlight some interesting papers that I found in my most recent search. Increasingly, I see statistical machine learning techniques used to facilitate rapid, automated detection.</p>
+
+<p id="block-2104a356-0743-4a19-af18-a718e8d87a00">In "<a href="https://www.researchgate.net/profile/Md-Hossain-575/publication/342346183_Authorship_Identification_on_Limited_Samplings/links/5fe3d3d9a6fdccdcb8f71eab/Authorship-Identification-on-Limited-Samplings.pdf" target="_blank" rel="noreferrer noopener">Authorship Identification on Limited Samplings</a>," the authors refined machine learning? (ML) techniques to find those that are "the most efficient method of authorship identification using the least amount of samples." They do an excellent job of summarizing the ML techniques in use today: Naive Bayes, SVMs, and neural networks. Those go beyond the scope of what I want to write about today, but they are effective and frequently used techniques for finding patterns in large data sets, such as written works.</p>
+
+<p id="block-5e25d1fa-c6dd-464b-94b0-eb77ae7aa039">In "<a href="https://arxiv.org/pdf/2011.15038.pdf" target="_blank" rel="noreferrer noopener">A Framework for Authorial Clustering of Shorter Texts in Latent Semantic Spaces</a>," the authors look at using unsupervised learning (a technique in machine learning that does not rely upon prior data for "training") on document clusters to identify similarity for short pieces of text (around a paragraph long). This technique could help take a single document and split it into sections and then apply these techniques to the collection. One would expect the works of multiple authors to form "clusters" due to the similarity between different paragraphs attributable to each author. This work is intriguing though the authors do caution: "[t]horough experimentation with standard metrics indicates that there still remains an ample room for improvement for authorial clustering, especially with shorter texts." From my reading, I suspect their techniques would be appropriate for a small number of authors. This could then be applied either to the case my client first asked about (joint authors in a large document) or an educational setting (to identify "<a href="https://www.scribbr.com/frequently-asked-questions/what-is-patchwork-plagiarism/" target="_blank" rel="noreferrer noopener">patchworking</a>" of a few different documents together into a single document submitted by a student.)</p>
+
+<p id="block-28dce51a-4899-4f01-901c-1be727b12f3f">Another intriguing approach I found was the idea of using <em>contextual </em>considerations. For example, in "<a href="https://link.springer.com/article/10.1007/s11192-019-03204-x" target="_blank" rel="noreferrer noopener">Semantic measure of plagiarism using a hierarchical graph model</a>," the authors extracted "topic feature terms" and used them to construct an acyclic graph ("hierarchical") of these terms. They then used graph analytic techniques to identify the similarity of specific sub-graphs [admittedly, I have concerns that this approach may not scale well since my recollection, <a href="https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem" target="_blank" rel="noreferrer noopener">since confirmed</a>, is that sub-graph isomorphism ("these two subgraphs are equivalent") is known to be difficult.]. One intriguing outcome of this is that it allowed the authors to find plagiarism where the <em>words</em> were changed, but the <em>meaning</em> was not - much like MOSS does with computer programs by examining the ASTs rather than the plain text.</p>
+
+<p id="block-a383059b-cd68-4c96-8ce5-3beef9ace6bb">This described technique reminded me of Carmine Guida's work at Georgia Tech for plagiarism detection. His Master's Thesis was "<a href="https://smartech.gatech.edu/bitstream/handle/1853/61787/GUIDA-THESIS-2019.pdf" target="_blank" rel="noreferrer noopener">PLAGO: A system for plagiarism detection and intervention in massive courses</a>." I was peripherally involved in his work while he was doing it, and aspects stand out in my mind today. The tool that he constructed (and I had an opportunity to use) related to using explicit techniques for identifying common authorship: n-grams (a technique for splitting text into sets of n words for analysis), stop words (used to detect sentence structure), structural matching (using the stop words), and stemming (using the root stem of an analysis word, rather than the full term). However, one of the most intriguing aspects of his work was <em>stylistic</em> evaluations. When the style of writing changes in a text, it often indicates a switch in authorship. For example, he talked about changes in sentence length being one indicator in our discussion about this. Word complexity is another. Thus, structural techniques like this can identify structural similarity and stylistic shifts suggesting a change in authorship.</p>
+
+<p id="block-321f5425-a83b-4f3c-aab9-17658c006944">Oren Halvani's Ph.D. thesis also seems relevant: "<a href="https://tuprints.ulb.tu-darmstadt.de/19861/1/Halvani_thesis_29032021_print.pdf" target="_blank" rel="noreferrer noopener">Practice-Oriented Authorship Verification</a>." Halvani focuses on <em>authorship verification</em>, which is truly core to the original question that my client asked and prompted me to go back and look at current work in the fields. Again, Dr. Halvani's work is directly relevant: "these characteristics can be used to assess the extent to which AV methods are suitable for practical use, regardless of their detection accuracy." His work explores specific mechanisms for verifying authorship, providing both a theoretical and empirical basis for employing these techniques.</p>
+
+<p id="block-a7cb318e-b92b-4d8f-8429-b84782f682fb">This stroll through current work confirmed what I had known was previously valid: this is an active area of research. Tools such as Turnitin and Grammarly may be sufficient to my client's objective, but if not, there is a vast body of recent work that shows it is possible to do this. Of course, if there's a commercial solution available that can be used, it is likely the best thing to do. I did note that Turnitin had some reasonably significant limits to the amount of analysis one could do in this regard. From my reading of their website, the size of the text being compared had size limits and required commercial accounts (see their page about <a href="https://help.turnitin.com/ithenticate/ithenticate-user/document-comparison/doc-to-doc-comparison.htm" target="_blank" rel="noreferrer noopener">iThenticate</a>, which would be used for comparing a small set of non-public texts.)</p>
+
+<p id="block-a78503d6-1714-4462-acdc-daa6b97e07d0">In my use of plagiarism detection tools, I find that I still have to confirm the findings of the tools. Sometimes there are "boilerplate" aspects that the tools do not detect and exclude. Sometimes, the tools do not consider things that support claims of similarity to me (e.g., in code, the <em>comments</em> and <em>debug strings</em> are often clear examples of code re-use). In the end, having a tool alone is not sufficient for having an expert use the tools to find suspect areas and then explain <em>why</em> specific regions represent plagiarism.</p>
+
+<p>In this post, I have discussed some of the background related to document plagiarism. However, this is not the only way others can co-opt that information. In <em>patents,</em> the author provides a detailed description of an invention in exchange for a limited monopoly on using the invention. In <em>trade secrets,</em> the owner of the secrets does not describe them publicly and relies upon their secrecy. If someone else independently discovers the secret, their protection is lost.</p>
+
+<div class="alignwide has-media-on-the-right is-stacked-on-mobile is-vertically-aligned-top"><div >
+<p>In my IP expert practice, much of my work is related to <em>trade secrets</em>. There are two common scenarios that I see routinely: (1) someone thinks what they know is new and innovative and a secret, or (2) someone thinks what they learned is well-known and <em>not</em> secret. Trade secrets can be powerful and fragile but common in technology cases. Many technologies are "well known" yet aren't known to someone who rediscovers them. This is a discussion for a future post!</p>
+</div><figure ><img src="AdobeStock_52835073-Converted.png" alt="" class="wp-image-2280 size-full"/></figure></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <div>
+      <div><a href="mailto:tony@wamason.com">tony@wamason.com</a></div>
+      <div>wamason.com LLC &middot; 614 Nashua St., Unit 139, Milford, NH 03055</div>
+      <div><a href="/privacy/">Privacy &amp; terms</a></div>
+    </div>
+    <nav aria-label="Elsewhere">
+      <a href="https://scholar.google.com/citations?user=-AWzh44AAAAJ">Google Scholar</a> &middot;
+      <a href="https://github.com/fsgeek">GitHub</a> &middot;
+      <a href="https://www.linkedin.com/in/tonymason2">LinkedIn</a> &middot;
+      <a href="https://fsgeek.ca/">fsgeek.ca</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Why The Narrative Meta-Data Tells Should Concern Legal Professionals - Part II &middot; Tony Mason</title>
+  <meta name="description" content="I know we have talked about meta-data in the past (see previous discussion of meta-data here) concerning photographs (Meta-Data), but today I turn my attention…">
+  <link rel="canonical" href="https://wamason.com/blog/why-the-narrative-meta-data-tells-should-concern-legal-professionals/">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .post-lead { font-size: 21px; line-height: 1.5; font-weight: 500; max-width: 760px; }
+    .post-meta { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); max-width: 760px; display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: baseline; }
+    .prose p, .prose ul, .prose ol { max-width: 760px; }
+    .prose img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 12px; }
+    .tag { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; white-space: nowrap; border: 1px solid var(--accent); color: var(--accent); }
+    .tag.thin { border-color: var(--line); color: var(--muted); }
+    .tag.draft { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); }
+    .video-embed { position: relative; max-width: 760px; aspect-ratio: 16 / 9; margin-top: 12px; }
+    .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 8px; }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="container header-row">
+    <div>
+      <div class="brand-name"><a href="/">Tony Mason</a></div>
+      <div class="brand-tagline">Technical consulting and expert witness</div>
+    </div>
+    <nav aria-label="Primary">
+      <a href="/consulting/">Consulting</a>
+      <a href="/expert/">Expert witness</a>
+      <a href="https://fsgeek.ca/">Research</a>
+      <a href="/blog/" aria-current="page">Blog</a>
+      <a href="/ayllu/">Ayllu</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+    <section class="hero">
+      <h1 class="post-lead">Why The Narrative Meta-Data Tells Should Concern Legal Professionals - Part II</h1>
+      <p class="post-meta">
+        <span>August 10, 2022</span>
+      </p>
+    </section>
+
+    <section class="section prose">
+<figure class="aligncenter size-large"><img src="AdobeStock_505883732-Converted.jpg" alt="" class="wp-image-2765"/></figure>
+
+<p>I know we have talked about meta-data in the past (see previous discussion of meta-data <a href="https://wamason.com/2021/11/15/meta-data/">here</a>) concerning photographs (<a href="https://wamason.com/2021/11/15/meta-data/" target="_blank" rel="noreferrer noopener">Meta-Data</a>), but today I turn my attention to a broader discussion of&nbsp;<strong>what&nbsp;</strong>it is and&nbsp;<strong>why</strong>&nbsp;it matters.</p>
+
+<p>Meta-data is literally "data about data." Since I have decades of experience with file systems, I tend to think of it in the terms we&nbsp;<em>use</em>&nbsp;in file systems: the&nbsp;<em>name</em>, the&nbsp;<em>timestamps</em>, and the&nbsp;<em>file's attributes</em>&nbsp;are its meta-data. This is information that a file system (for example) maintains about the file and provides as needed to applications. Those applications, in turn, use that meta-data to provide you with a visualization of the files using that meta-data as guidance.</p>
+
+<p>File system meta-data is relatively minimal, yet it has proven to be more or less sufficient for more than a half-century. Some file systems augment their meta-data by storing "extra" information with a file; typically, these are referred to as "extended attributes." From what I can tell, this idea of having arbitrary meta-data maintained by a file system stems from work done in the 1980s by&nbsp;<a target="_blank" href="https://www.researchgate.net/profile/Jeffrey-Mogul-2/publication/221459215_Representing_Information_About_Files/links/0c96053c7547a96123000000/Representing-Information-About-Files.pdf" rel="noreferrer noopener">Jeff Mogul</a>. Even today, support for extended attributes remains unusual. For instance, Microsoft's main file system (NTFS) supports them but does not expose them to typical Windows applications.</p>
+
+<p>Thus, what often happens is meta-data becomes part of the&nbsp;<em>data</em>&nbsp;itself. This is a fundamental entwining of data and meta-data that we rely upon extensively today. For example, applications might recognize that a particular piece of data corresponds to a uniform resource identifier and, in turn, display that to users as a link. Some applications allow embedding a link within the text. For example,&nbsp;<a target="_blank" href="https://wordpress.org/" rel="noreferrer noopener">WordPress</a>, the software I use to maintain this blog, permits me to embed the link. Photographs contain meta-data about the photo within the file, and other applications similarly do this. Some of my work relates to figuring out the structure and format of meta-data maintained by application programs for forensic purposes (e.g., to figure out how and why specific data and meta-data exist in a particular format.)</p>
+
+<p>One of my continual frustrations is that many people eschew the value of meta-data. For example, today, I received an e-mail that was&nbsp;<strong>obviously</strong>&nbsp;<a target="_blank" href="https://www.phishing.org/what-is-phishing" rel="noreferrer noopener">phishing</a>. The first thing I did was look at the&nbsp;<em>meta-data</em>&nbsp;that accompanied the e-mail. I captured that meta-data and removed the spoofed e-mail address as it looked like it might belong to a real person. It is long, so if you want to see it look&nbsp;<a target="_blank" href="https://i0.wp.com/wamason.com/wp-content/uploads/2022/07/phishing-2022-07-21.png?ssl=1&amp;resize=107%2C107" rel="noreferrer noopener">here</a>. In all fairness, the e-mail itself was a poor-quality phishing attempt. It was interesting because it was sent from an internal e-mail address. The headers, however, provided some handy information. None of that information was present in the e-mail itself.</p>
+
+<p>Thus, meta-data often looks like gibberish but is often rich with helpful information and insight. For example, this e-mail appears to have been sent using the mail API interface ("mapi"):</p>
+
+<pre ><code>Received: from BN8PR07MB6897.namprd07.prod.outlook.com
+(&#91;fe80::71fb:7c18:45a:4c7]) by BN8PR07MB6897.namprd07.prod.outlook.com
+(&#91;fe80::71fb:7c18:45a:4c7%8]) with mapi id 15.20.5438.024; Thu, 21 Jul 2022 13:15:59 +0000</code></pre>
+
+<p>Someone connected to a Microsoft e-mail server using a reasonably standard e-mail client using the MAPI interface sent the message at 1:15:59 UTC. The message was then sent&nbsp;<em>to a different server</em>&nbsp;via the&nbsp;<a href="https://techterms.com/definition/smtp" target="_blank" rel="noreferrer noopener">SMTP&nbsp;</a>electronic mail protocol:</p>
+
+<pre ><code>Received: from BN8PR07MB6897.namprd07.prod.outlook.com (2603:10b6:408:7b::20) by BN7PR07MB5089.namprd07.prod.outlook.com (2603:10b6:408:31::22) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5438.20; Thu, 21 Jul 2022 13:15:59 +0000</code></pre>
+
+<p>I found it mildly interesting that these servers use IPv6 addresses (2603:10b6:408:7b::20, for example) rather than IPv4 addresses (which have the aaa.bbb.ccc.ddd style text format.) While not germane to the phishing e-mail, it tells me about how Microsoft's internal networks are now configured.</p>
+
+<p>Finally, that e-mail was sent to a&nbsp;<em>different</em>&nbsp;server - presumably the one where my e-mail box is hosted:</p>
+
+<pre ><code>Received: from BN7PR07MB5089.namprd07.prod.outlook.com (::1) by<br>CO2PR07MB2565.namprd07.prod.outlook.com with HTTPS; Thu, 21 Jul 2022 13:16:08 +0000 <br>Authentication-Results: dkim=none (message not signed) header.d=none;dmarc=none action=none header.from=gatech.edu;</code></pre>
+
+<p>Though it looks like these two services are co-located (the ::1 address is IPv6 for "localhost."). The alarming bit about this e-mail was that it appeared to be from someone within the organization. It provided a link to obtain the recipient's e-mail address and password for their Microsoft Apps for Business 365 account. The&nbsp;<em>meta-data</em>&nbsp;tells us a story (only a small amount of which I unraveled) that is invaluable.</p>
+
+<p>The&nbsp;<em>challenge</em>&nbsp;I often face when working with electronic discovery is that this meta-data is "scraped away" by a system focused on physical documents that have been modified to handle electronic records. Nothing is worse than seeing a scanned image with a word in a color I associate with a&nbsp;<em>link</em>&nbsp;to another unrelated document. This is quite common when working with technology companies as data from&nbsp;<a target="_blank" href="https://www.atlassian.com/software/confluence" rel="noreferrer noopener"><em>Confluence</em></a>&nbsp;(a popular tool for documenting technical resources) often involves linking to other information, including task tracking information, source code, and other documents within the Confluence system. These documents can then be exported as PDFs. The legal discovery process usually then converts these PDFs into images. The images are subsequently loaded into a document discovery database (such as&nbsp;<a target="_blank" href="https://www.relativity.com/" rel="noreferrer noopener">Relativity</a>), where the images are converted back into text via optical character recognition (OCR.) Any meta-data, such as the links behind the pretty blue words I want to click and follow, does not work. It makes trying to understand context, provenance, and relationships vastly more complicated and dramatically drives up the cost of discovery for the parties.</p>
+
+<p>In addition to being "inconvenient," removing meta-data can also be done for less savory reasons: it can be used to obfuscate the fact that a document has been modified.</p>
+
+<p>When I write an expert report, I normally provide a&nbsp;<strong>digitally signed</strong>&nbsp;version of that report in portable document (PDF) format. Unlike a physical signature, which (sort of) protects the signed page, a digital signature is on the&nbsp;<em>content</em>&nbsp;of some or all of the file, thus ensuring that none of the signed information has been modified. To demonstrate this, I decided to sign my&nbsp;<em>curriculum vitae</em>.</p>
+
+<p>If I were to take that PDF and then convert it into an image, the digital signature would be lost. Small changes can be made, and it is challenging to detect such a discrepancy. Looking at the PDF document in a capable PDF viewer will confirm if the signature over the document is valid.</p>
+
+<p ></p>
+
+<p>I could have made a visible "digital signature" box, but it would not have made the document more secure - the visual nature of it is to provide information to&nbsp;<em>human</em>&nbsp;users. The programs do not need that to verify the signature.</p>
+
+<div class="alignwide has-media-on-the-right is-stacked-on-mobile"><div >
+<p>Thus, meta-data is essential and often provides considerable insight that is stripped away in the legal discovery process. When possible, I advise clients to obtain original PDF documents precisely because this meta-data is very useful. Of course, other electronic documents, such as photographs, also have useful meta-data within the files where the data needed to reproduce the picture is located. If all you are given is a printed copy of the photograph, that EXIF meta-data has been discarded. While this is not evidence of tampering, it does make tampering&nbsp;<em>more likely</em>, and thus the value of such evidence is diminished.</p>
+</div><figure ><img src="AdobeStock_357738112-Converted.jpg" alt="" class="wp-image-2766 size-full"/></figure></div>
+
+<p>Hopefully, the legal process will come to appreciate the benefits of ensuring that both the data and the meta-data are available to experts to provide better insight and greater surety about our work. In the meantime, I will always strive to do the best job possible within the constraints I am given because the position of a good expert is to provide truthful insight.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <div>
+      <div><a href="mailto:tony@wamason.com">tony@wamason.com</a></div>
+      <div>wamason.com LLC &middot; 614 Nashua St., Unit 139, Milford, NH 03055</div>
+      <div><a href="/privacy/">Privacy &amp; terms</a></div>
+    </div>
+    <nav aria-label="Elsewhere">
+      <a href="https://scholar.google.com/citations?user=-AWzh44AAAAJ">Google Scholar</a> &middot;
+      <a href="https://github.com/fsgeek">GitHub</a> &middot;
+      <a href="https://www.linkedin.com/in/tonymason2">LinkedIn</a> &middot;
+      <a href="https://fsgeek.ca/">fsgeek.ca</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

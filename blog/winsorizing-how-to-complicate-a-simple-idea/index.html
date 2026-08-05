@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Winsorizing: How to Complicate a Simple Idea &middot; Tony Mason</title>
+  <meta name="description" content="Last year I came across the use of this term and had to look it up. I ultimately understood the idea as soon as I read the description, but it made me think of…">
+  <link rel="canonical" href="https://wamason.com/blog/winsorizing-how-to-complicate-a-simple-idea/">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .post-lead { font-size: 21px; line-height: 1.5; font-weight: 500; max-width: 760px; }
+    .post-meta { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); max-width: 760px; display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: baseline; }
+    .prose p, .prose ul, .prose ol { max-width: 760px; }
+    .prose img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 12px; }
+    .tag { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; white-space: nowrap; border: 1px solid var(--accent); color: var(--accent); }
+    .tag.thin { border-color: var(--line); color: var(--muted); }
+    .tag.draft { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); }
+    .video-embed { position: relative; max-width: 760px; aspect-ratio: 16 / 9; margin-top: 12px; }
+    .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 8px; }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="container header-row">
+    <div>
+      <div class="brand-name"><a href="/">Tony Mason</a></div>
+      <div class="brand-tagline">Technical consulting and expert witness</div>
+    </div>
+    <nav aria-label="Primary">
+      <a href="/consulting/">Consulting</a>
+      <a href="/expert/">Expert witness</a>
+      <a href="https://fsgeek.ca/">Research</a>
+      <a href="/blog/" aria-current="page">Blog</a>
+      <a href="/ayllu/">Ayllu</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+    <section class="hero">
+      <h1 class="post-lead">Winsorizing: How to Complicate a Simple Idea</h1>
+      <p class="post-meta">
+        <span>May 6, 2022</span> <span class="tag thin">Mathematical Technical Concepts</span>
+      </p>
+    </section>
+
+    <section class="section prose">
+<p>Last year I came across the use of this term and had to look it up. I ultimately understood the idea as soon as I read the description, but it made me think of the propensity of technologists to invent terminology. But, of course, one benefit of creating specialized languages is excluding those who do not understand the language.</p>
+
+<p>For example, the legal profession excels at taking terms and evolving them to have novel or bewitching meanings.</p>
+
+<p>I learned this term when reading the information in a financial trading case. Then, I figured out&nbsp;<em>why</em>&nbsp;it was called "winsorizing." It was nothing mysterious: the person who first described it in literature germane to that field was surnamed Winsor.</p>
+
+<p>I was recently reminded of this as I read the trial transcript in preparation for my testimony. The attorney called attention to this term and explained its meaning. I realized that an essential part of what I do when demystifying technology is to try and come up with intuitive explanations for what we do and why.</p>
+
+<p>So, winsorizing is the process of removing "outliers" from the data. For example, the attorney spoke to a jury of a dozen people. The example I would have used would have been to explain that if I had a group composed of the jurors plus Elon Musk, the <em>average</em> net worth of the group would be around the net worth of Elon Musk divided by 13. One data point <strong>dominates</strong> that group. Thus, the idea of removing "outliers" is to remove points that have a disproportionate effect on the group. If we don't do that, we might conclude that jurors are rich, which is not likely the case. Removing such samples usually leads to better analysis, but it may not be evident until you explain <em>why</em>. Tying it to something the reader (for a report) or audience (jury) can understand is powerful and helpful in making a random term "make sense."</p>
+
+<figure class="size-large is-resized"><img src="AdobeStock_276209502-3.jpeg" alt="" class="wp-image-2430" width="610" height="400"/><figcaption>The Elon of Pineapples</figcaption></figure>
+
+<p>Another example of this I like to use also appeared to me while reading the trial transcript. Covid is still very much an active threat, and they are testing people to ensure they do not have Covid. There is a presumption that a positive test result means you have Covid, but that is often not the case. This is a&nbsp;<strong>general problem</strong>&nbsp;with tests.</p>
+
+<p>My usual way of explaining this is to start with a highly accurate test: 99.5%. So, for 1000 people, that test will find five positive results&nbsp;<strong>even if none of those people have the condition.</strong></p>
+
+<p>In this case, the "positive predictive value" of the test is 0%. Therefore, the probability of someone with a positive test result having the condition (whether it doesn't exist or doesn't apply to the population) is always a false positive.</p>
+
+<p>That's not the real world in which we live, though. The condition does exist but is rare. So, if the need for which we are testing is 0.5%, then 5 people in 1000 have an actual positive test. Our 99.5% accurate test will find almost 5 people (in the 995, that shouldn't be positive), and thus we expect to see 10 people with a positive test result. Not the "positive predictive value" is approximately 50% (half-true positives, half false positives.)</p>
+
+<p>Why does this matter? The "rapid antigen" test for Covid is between 45% and 97% accurate. It becomes more challenging to evaluate some of this because as the test becomes less accurate, we have to start worrying about&nbsp;<em>false-negative</em>&nbsp;results. For the moment, let's ignore that because my point is more focused than that. At 97%, we get&nbsp;<em>30</em>&nbsp;false-positive results in a group of 1000 people. So, how do we protect against that?</p>
+
+<p>Easy. We omit people that are more likely to be negative. This helps increase the prevalence of the condition. In my earlier example, the prevalence was 0.5%. If the prevalence had been 5%, so 50 people in 1000 were positive, and we had 5 false positives (4.75 since a false positive can only happen in the group of 950 negative people), then our positive predictive value is much better: 90%.</p>
+
+<p>Thus, usually, we're told to only test "if you have symptoms." This helps you eliminate the people that are&nbsp;<em>unlikely</em>&nbsp;to have Covid, and thus for the group that does test, the prevalence is higher, and the "positive predictive value" of the test is better. In Court, the prevalence will be relatively low, and thus a positive result without symptoms is likely to be a false positive. With 97% accuracy, there are 30 false positives per 1000. If the prevalence is 1%, there are 10 true positives. The "positive predictive value" is 25% (10 true positives out of 40 total positives.)</p>
+
+<p>Explaining things systematically takes time and patience, but it is advantageous because it helps people better understand what we're doing and why we're doing it.</p>
+
+<p>Now, I hope my Covid test is not a false positive so I can provide my testimony to the court successfully.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <div>
+      <div><a href="mailto:tony@wamason.com">tony@wamason.com</a></div>
+      <div>wamason.com LLC &middot; 614 Nashua St., Unit 139, Milford, NH 03055</div>
+      <div><a href="/privacy/">Privacy &amp; terms</a></div>
+    </div>
+    <nav aria-label="Elsewhere">
+      <a href="https://scholar.google.com/citations?user=-AWzh44AAAAJ">Google Scholar</a> &middot;
+      <a href="https://github.com/fsgeek">GitHub</a> &middot;
+      <a href="https://www.linkedin.com/in/tonymason2">LinkedIn</a> &middot;
+      <a href="https://fsgeek.ca/">fsgeek.ca</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

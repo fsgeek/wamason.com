@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>US7,069,546 &middot; Tony Mason</title>
+  <meta name="description" content="Generic framework for embedded software development">
+  <link rel="canonical" href="https://wamason.com/blog/us7069546/">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .post-lead { font-size: 21px; line-height: 1.5; font-weight: 500; max-width: 760px; }
+    .post-meta { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); max-width: 760px; display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: baseline; }
+    .prose p, .prose ul, .prose ol { max-width: 760px; }
+    .prose img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 12px; }
+    .tag { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; white-space: nowrap; border: 1px solid var(--accent); color: var(--accent); }
+    .tag.thin { border-color: var(--line); color: var(--muted); }
+    .tag.draft { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; padding: 1px 7px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); }
+    .video-embed { position: relative; max-width: 760px; aspect-ratio: 16 / 9; margin-top: 12px; }
+    .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 8px; }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="container header-row">
+    <div>
+      <div class="brand-name"><a href="/">Tony Mason</a></div>
+      <div class="brand-tagline">Technical consulting and expert witness</div>
+    </div>
+    <nav aria-label="Primary">
+      <a href="/consulting/">Consulting</a>
+      <a href="/expert/">Expert witness</a>
+      <a href="https://fsgeek.ca/">Research</a>
+      <a href="/blog/" aria-current="page">Blog</a>
+      <a href="/ayllu/">Ayllu</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+    <section class="hero">
+      <h1 class="post-lead">US7,069,546</h1>
+      <p class="post-meta">
+        <span>July 1, 2019</span> <span class="tag thin">Claims</span>
+      </p>
+    </section>
+
+    <section class="section prose">
+<p> <a href="https://patents.google.com/patent/US7069546B2/en?oq=7069546">Generic framework for embedded software development</a></p>
+
+<p class="has-drop-cap">Each morning I receive an e-mail detailing the patent legal cases that have been filed from the fine folks at <a href="https://insight.rpxcorp.com/">RPX Corporate</a>, part of their RPX Insight service.  I generally don't have time to review all the cases, but I often pick several complaints to read.  The morning as I write this (June 28, 2019) I noticed a lawsuit against Microsoft.  Since I am involved in the technology space, cases involving technology companies pique my interest.</p>
+
+<p>As I began to read the basic description of the case - the use of modular software development practices in embedded systems - the more it piqued my curiosity.  After all, I did quite a lot of work with Windows NT starting <em>before</em> it was released in 1993.  One of its key features was the use of it in embedded systems.  Since I had intended on describing how I do patent analysis, I thought this would be a good one with which to start, as I have some expertise in this area, having co-authored <em><a href="https://www.amazon.com/Windows-NT-Device-Driver-Development/dp/1578700582">Windows NT Device Driver Development</a></em>, a book that is still commonly available and still relevant today.</p>
+
+<p>The place to start is at the actual original patent: this is the definitive document on what this patent covers.  It includes the <em>specification</em>, which is text and art that explain the problem as well as the general intent of the techniques of the patent itself.  In my experience, having been involved in about a dozen patent applications and patent prosecutions, the specification is generally drafted with the input of both the inventor(s) and the patent attorney.  This isn't a <em>requirement</em> - someone familiar with the structure and drafting of patent applications as well as the technology could certainly do both.  In my experience those skill sets seldom show up in a single person.</p>
+
+<p>The actual patent is, however, the <em>claims</em> of the patent.  These describe <em>what is claimed</em> by the inventors.  The specification can explain existing technologies or alternative solutions, but those are background, not the invention.  Thus, the claims set forth the specifics of the invention claimed by the patent.</p>
+
+<p>Patents consist of <em>independent</em> claims and <em>dependent</em> claims.  The independent claims stand on their own, while dependent claims rely upon an independent claim or another dependent claim.  For example, dependent claims might specify particular details of a specific <em>embodiment</em> (implementation or realization) of the patent relative to some prior claim of the patent.</p>
+
+<p>So I start by looking at the claims.  If you have not read a patent before, you might find the format of it peculiar; that's because it is shaped by many years of legal precedent, custom, and so forth.  As the law regarding patents evolves, so does the language used in patents, so over time you will notice a shift in how patents are drafted.</p>
+
+<p>This patent has two independent claims and 43 dependent claims.  Claim 1 is an independent claim:</p>
+
+<blockquote ><p>A method for producing embedded software, comprising:<br>providing one or more generic application handler programs, each such program comprising computer program code for performing generic application functions common to multiple types of hardware modules used in a communication system; generating specific application handler code to associate the generic application functions with specific functions of a device driver for at least one of the types of the hardware modules, wherein generating the specific application handler code comprises defining a specific element in the specific application handler code to be handled by one of the generic application functions for the at least one of the types of the hardware modules, and registering one of the specific functions of the device driver for use in handing the defined specific element; and compiling the generic application handler programs together with the specific application handler code to produce machine readable code to be executed by an embedded processor in the at least one of the types of the hardware modules.</p></blockquote>
+
+<p>Ideally, it is good if someone familiar with the field of the patent can read the claims and understand the invention.  In reality, it is common to find that the patent uses language which is not immediately obvious.  The general rule then is that if the specification defines the terms, then that is the meaning we should give that term.  If the specification does not define the term, then we should give it the ordinary meaning that someone who knows the field would ascribe to it ("one of ordinary skill in the art").</p>
+
+<p>One of the challenges of patent litigation can actually be figuring out what the patent <em>means</em>.  This often involves trying to understand the context of terminology <em>within their historical context</em>.  So, if you're trying to prove you understand what some term that "everybody knew" actually meant you will find yourself looking through old reference materials: books, dictionaries, devices, you name it.  An easy mistake to make is to assume the <em>current</em> meaning is, in fact, the meaning <em>at the time the patent was filed</em>.  Many terms do retain their meaning, but some terms shift over time as the field of the invention evolves.</p>
+
+<p>So what does this <em>mean</em>?  The term "embedded software" to me means "software that operates on a device and is inherently involved in the functionality of that device".  We use embedded software all the time - it is in numerous things, including televisions, refrigerators, cars, wearable devices, etc.  Thus, this is not a particularly limiting term to use at this point.  Operating systems software is typically one of the essential parts of embedded systems. </p>
+
+<p>So to my first read, "A method for producing embedded software" seems like a broad sweeping statement.  If you have an embedded device, you need to be able to produce the embedded software, assuming there is a computational device of some sort involved (e.g., a central processing unit).</p>
+
+<p>Let's move on then: "providing one or more generic application handler programs".  Here is where the terminology starts to narrow down what this invention is about.  I'm not quite sure yet what a "generic application handler program" is (remember, I haven't read the specification yet - I'm trying to understand the patent from the claims).  My mental model at this point is that we have some programs that provide a range of functions.  The term <em>generic</em> suggests to me that there is some mechanism for providing specialization - the idea of using a "plug-in" model.  This is surprisingly common in systems software; in fact it is a common technique in software in general.  The first time you sit down to write the software to talk to the very first printer, you really don't know what that software should look like.  By the time you are writing the same software for your 5th or 10th printer, you'll have noticed that there is quite a lot of commonality about how they operate, though there are typically some sections that are specific to the device.  Thus, you can extract "common functionality" and separate it from "device specific functionality".  To me, this would mesh with the term generic.</p>
+
+<p>I must admit, I'm still a bit vague on the significance of "generic application handler programs" because it seems broad.  But let's continue further, perhaps things will become clearer from context: "each such program comprising computer program code for performing  generic application functions common to multiple types of hardware  modules used in a communication system".  Well, programs in my area <em>do</em> correspond to computer program code for performing... <em>something</em>.  This is one of those points where I start thinking about what one means by "computer program code".  I suspect it won't matter, but this is one of the areas that can quickly become fuzzy.  I'll save that for a more theoretical blog post at some point.</p>
+
+<p>Anything that consists of a series of instructions that can be carried out by a computer likely falls into the category of "computer program code"; having said that, I suspect in this case they mean "binary code that corresponds to the instruction set of the computer".  I will run with that for now.  That leads to "... for performing generic application functions..."  This use of generic still leaves me feeling this is quite broad.  The next bit helps narrow it a bit: "... to multiple types of hardware modules..."  <em>This</em> is why I was interested.  Hardware!  Now we are talking about an area in which I'm steeped in experience, having written my first Ethernet driver back in 1987.  If you are not familiar with Ethernet (IEEE 802.1), that is one of the earliest standardized computer communications mechanisms. And then the last bit "... used in a communication system;"  I'm feeling warm and fuzzy now, because "communication system" to me normally means "network" and, as I observed earlier, that's an area which which I'm familiar well before 2001.  In fact, one of the earliest examples of noticing commonality of hardware devices was networking.  Rather than ask every network device vendor to write a separate device driver for their device, we could construct a common code module that implemented the things that were common across devices (hence making it generic) and leave the much smaller bits of interacting directly with the hardware, which often varies according to the specific hardware, to a developer familiar with that hardware.  For programs using the network, this is also beneficial because it means we don't need to rewrite those programs to <em>use</em> different network hardware.  One early example of this was the <a href="https://en.wikipedia.org/wiki/Network_Driver_Interface_Specification">Network Device Interface Specification (NDIS)</a> developed by Microsoft and 3COM and included in various Windows versions, including Windows NT.</p>
+
+<p>At least the picture is getting clearer at this point.  Let's see where we go from here: "... generating specific application handler code to associate the generic  application functions with specific functions of a device driver for at  least one of the types of the hardware modules".  I <em>think </em>this sounds like the invention wants to generate the code so that the developer can "fill in the blanks".  This would ease the burden on the developer building the hardware specific code - much like giving them a template with comments that say "add code here to get your device to do X".  This sounds like <em>meta-programming</em> to me.  The idea of doing this is certainly not new, but perhaps it was novel in 2001.  I'd need to do more research to find out.</p>
+
+<p>Fortunately, a model of what this patent means is forming for me.  </p>
+
+<p>Next we have "wherein generating the specific application handler code comprises  defining a specific element in the specific application handler code to  be handled by one of the generic application functions for the at least one of the types of the hardware modules".  Remember when I was talking about the language of patents?  This is a great example of it.  The goal here, as I understand it, is to try and be <em>inclusive</em> with the language.  If we start with a communications device, we usually start simply: we have a <em>send</em> operation and a <em>receive</em> operation.  But if I have a communications device that only wants to <em>receive</em>, perhaps because it is only monitoring network traffic, I wouldn't need a <em>send</em> operation at all.  Rather than list all the possible operations and the various permutations, the intent here is to capture the idea that "we have a list of 'generic functions' that <em>might</em> be implemented, but don't all need to be implemented".</p>
+
+<p>Another example?  You don't need any support for <em>writing</em> to a CD-ROM.  It's a waste of time.  If you look at the <a href="https://github.com/microsoft/Windows-driver-samples/tree/master/filesys/cdfs">Windows CDFS file systems code</a> for example, you will note that it has routines for handling <em>reading</em> from a CD-ROM, but not <em>writing to</em> a CD-ROM.  Makes sense.  So the intent of this language is to capture the broad range of possibilities that occur in the device space.  While that CDFS code is fairly recent, it is not remarkably different than the version that Microsoft publicly distributed in 1994 (the first time I saw it).</p>
+
+<p>One benefit of breaking this wall of text up into smaller bite sized chunks is that we have an opportunity to breath because the <em>sentence</em> continues: "wherein generating the specific application handler code comprises defining a specific element in the specific application handler code to be handled by one of the generic application functions for the at least  one of the types of the hardware modules".  I admit, I had to read (and re-read) this several times to try and make sense of it.   So I'll try to translate it back: we have some code that we need to talk to the hardware.  We have to have some way to map the relevant parts of that hardware specific code to the generic operation being performed.  In other words, to return to my hypothetical network device, I have to have some way to map from the generic <em>send</em> operation to the hardware specific <em>send</em> operation bits - after all, I can't call the hardware specific <em>receive</em> code, since it can't send a message.  That makes sense to me.</p>
+
+<p>We're making progress!  Next fragment: "and registering one of the specific functions of the device driver for use in handing the defined specific element".  I'm quite familiar with the concept of registering specific functions - this is a common model for layering abstraction in systems.  For example, I've done a fair bit of file systems work over the years and it is quite common to find that file systems "insert" themselves into the system by registering the functions they provide to perform particular operations.   This sort of decomposition of functionality into "common" (or generic) and "specialized" has been around for quite a long time; certainly longer than I've been building systems software.  </p>
+
+<p>Now the last fragment: "and compiling the generic application handler programs together with the  specific application handler code to produce machine readable code to  be executed by an embedded processor in the at least one of the types of  the hardware modules."  We have some very specific bits at this point. Note that it says <em>compiling</em>.  That would immediately eliminate (at least for this claim) the possibility that this code is not compiled - so this wouldn't apply if the code were interpreted.  I could nit-pick the point about "together".  Would this exclude the case in which you just <em>linked</em> the code together (e.g., you used a pre-existing library), but I'll defer considering that further for now.  I don't really have much problem with "machine readable code".  The limitation that it is "to be executed by an embedded processor..." is similarly not really very limiting.  Essentially most, if not all, the CPUs we used in 2001 (or today) can be used as embedded processors.  In fact, we normally use the same device drivers for desktop computers, which are not embedded systems, and stand-alone devices, which <em>are</em> embedded systems. Thus, again, not really very limiting. The last bit just says it has to have something to do with at least one piece of hardware.  That makes sense to me - why bother compiling code for hardware, if that hardware isn't present in the system?</p>
+
+<p>I'll likely re-read this again, but breaking it down in this fashion helps me better understand the general scope - of the first claim.</p>
+
+<p>Actually, the second claim is much easier, since it just builds upon the first claim:</p>
+
+<blockquote ><p>A method according to claim 1, wherein providing the generic application handler programs comprises providing an application program interface (API) to enable a system management program in the communication system to invoke the generic application functions.</p></blockquote>
+
+<p>So, this claim just specifies one of the generic interfaces is some sort of management operation.  To allow a program to access this, we need an API.  APIs are certainly not new, nor are system management programs.  This claim is <em>much </em>easier to understand.  In my experience, dependent claims typically provide these sorts of small, focused instances of the broader claim upon which they are based.</p>
+
+<p>At this point I'll break.  There's more analysis that can be done here, but I've made a good start.   I am a bit surprised at the breadth of this patent. Such breadth is a two-edged sword for the patent holder when it comes to enforcement: the broader the claims, the more likely they are to find many people potentially infringing upon the patent, but also the more difficult it is to defend the patent against work that might anticipate this.  Narrow patents, in my experience, are more difficult to enforce but when you find an instance where someone <em>is</em> practicing the patent, the narrow patent is more difficult for them to challenge successfully.</p>
+
+<p><em>Lucio</em> <em>Development LLC v</em> <em>Microsoft Cor</em>p, Case 6:19-cv-283.</p>
+
+<p></p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <div>
+      <div><a href="mailto:tony@wamason.com">tony@wamason.com</a></div>
+      <div>wamason.com LLC &middot; 614 Nashua St., Unit 139, Milford, NH 03055</div>
+      <div><a href="/privacy/">Privacy &amp; terms</a></div>
+    </div>
+    <nav aria-label="Elsewhere">
+      <a href="https://scholar.google.com/citations?user=-AWzh44AAAAJ">Google Scholar</a> &middot;
+      <a href="https://github.com/fsgeek">GitHub</a> &middot;
+      <a href="https://www.linkedin.com/in/tonymason2">LinkedIn</a> &middot;
+      <a href="https://fsgeek.ca/">fsgeek.ca</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
