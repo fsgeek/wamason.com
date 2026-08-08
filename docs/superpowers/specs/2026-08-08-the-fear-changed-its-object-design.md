@@ -44,7 +44,11 @@ The close will point readers to the Tessera repository record:
 
 - `c54d70d` — author ratification
 - `723af18` — timestamp proof added
-- `f51ed9f` — timestamp proof upgraded
+
+At drafting time the proof remains pending: one calendar reports a Bitcoin
+transaction awaiting six confirmations, while the others report pending
+attestations. Commit `f51ed9f` upgrades a different proof and must not be cited
+as confirmation of Amendment 3.
 
 The note will direct readers to prefer those artifacts if its account drifts.
 
