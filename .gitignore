@@ -1,6 +1,7 @@
 # ignore claude local artifacts
 .claude/
 .mcp.json
+CLAUDE.md
 
 # ignore vs code artifacts
 .vscode/
