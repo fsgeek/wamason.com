@@ -41,7 +41,7 @@ Run:
 
 ```bash
 cd /home/tony/projects/wamason.com/ayllu
-./sync-from-live.sh
+bash ./sync-from-live.sh
 git status --short
 ```
 
@@ -128,7 +128,7 @@ Run:
 
 ```bash
 cd /home/tony/projects/wamason.com/ayllu
-./sync-from-live.sh --check
+bash ./sync-from-live.sh --check
 ```
 
 Expected: `orphans: none`, `dangling: none`, and an entry count exactly one higher than the synchronized baseline recorded in Task 1.
