@@ -1,0 +1,22 @@
+# Paths that live in the repository but must NEVER reach the public server.
+#
+# This file exists because the repository is becoming the publishing
+# vehicle rather than a backup of it. Under the old rsync-by-hand model a
+# human named what to send, so internal files were safe by omission.
+# Once a tag deploys the tree, omission is no longer protection: every
+# tracked file is a candidate for publication unless it is listed here.
+#
+# rsync --exclude-from syntax. Directories need a trailing slash.
+.git/
+.github/
+.claude/
+docs/
+tools/
+tmp/
+_drafts/
+*.bak-*
+*.bak-preayllu
+CLAUDE.md
+.deployignore
+.gitignore
+.mcp.json

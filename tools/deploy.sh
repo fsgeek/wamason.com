@@ -63,7 +63,11 @@ else
     && echo "  backed up"
 fi
 
-RSYNC_OPTS=(-a --itemize-changes --exclude '.git' --exclude '*.bak-*' --exclude 'tools')
+# What must never be published is declared in .deployignore, not inlined
+# here, so the list is reviewable in a diff on its own.
+IGNORE="$REPO/.deployignore"
+[[ -f "$IGNORE" ]] || { echo "missing .deployignore -- refusing to deploy" >&2; exit 1; }
+RSYNC_OPTS=(-a --itemize-changes --exclude-from="$IGNORE")
 (( dry )) && RSYNC_OPTS+=(--dry-run)
 
 echo "== 5. entry directories first, index last =="
