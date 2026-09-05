@@ -67,7 +67,7 @@ fi
 # here, so the list is reviewable in a diff on its own.
 IGNORE="$REPO/.deployignore"
 [[ -f "$IGNORE" ]] || { echo "missing .deployignore -- refusing to deploy" >&2; exit 1; }
-RSYNC_OPTS=(-a --itemize-changes --exclude-from="$IGNORE")
+RSYNC_OPTS=(-a --checksum --itemize-changes --exclude-from="$IGNORE")
 (( dry )) && RSYNC_OPTS+=(--dry-run)
 
 echo "== 5. entry directories first, index last =="
