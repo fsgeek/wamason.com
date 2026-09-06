@@ -50,9 +50,13 @@ git archive "$TAG" | tar -x -C "$STAGE"
 echo "  exported to $STAGE"
 
 echo "== 3. validate THAT tree, not the working copy =="
-( cd "$STAGE" && mkdir -p tools && cp "$REPO/tools/validate-ayllu.py" tools/ \
-  && python3 tools/validate-ayllu.py ) || {
-  echo "  VALIDATION FAILED -- nothing was sent." >&2; exit 1; }
+( cd "$STAGE" && mkdir -p tools \
+  && cp "$REPO"/tools/{validate-ayllu.py,build_index.py,render_index.py,ayllu.py,extract_index.py} tools/ \
+  && python3 tools/validate-ayllu.py \
+  && python3 tools/build_index.py --check ) || {
+  echo "  VALIDATION FAILED -- nothing was sent." >&2
+  echo "  (--check failing means the index is stale: run tools/build_index.py)" >&2
+  exit 1; }
 
 echo "== 4. back up the live site =="
 if (( dry )); then
