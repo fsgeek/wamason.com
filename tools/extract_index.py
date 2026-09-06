@@ -49,8 +49,12 @@ def extract(path=INDEX):
         kind, date, byline = (g.strip() for g in head.groups())
 
         author = re.search(r'<span class="author">(.*?)</span>', byline, re.S)
-        # everything after the author span, verbatim -- model, collaborators
+        # Everything after the author span, verbatim -- model,
+        # collaborators. The amended marker is captured separately, so it
+        # must be trimmed here or it renders twice.
         suffix = byline[author.end():] if author else ""
+        suffix = re.sub(r'\s*<span class="amended">.*?</span>', "", suffix,
+                        flags=re.S)
 
         records.append({
             "n": n,
@@ -61,6 +65,9 @@ def extract(path=INDEX):
             "href": title.group(1),
             "title": title.group(2).strip(),
             "gloss": gloss.group(1).strip() if gloss else None,
+            "amended": (re.search(r'<span class="amended">&middot; amended '
+                                  r'([^<]+)</span>', it).group(1).strip()
+                        if 'class="amended"' in it else ""),
         })
     return records, html, m
 

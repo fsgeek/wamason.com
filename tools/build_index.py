@@ -63,7 +63,8 @@ def main():
 
     open(INDEX, "w", encoding="utf-8").write(built)
     corpus = [{k: r[k] for k in
-               ("href", "title", "kind", "date", "author", "byline", "gloss")}
+               ("href", "title", "kind", "date", "author", "byline",
+                "gloss", "amended")}
               for r in recs]
     open(SEARCH, "w", encoding="utf-8").write(
         json.dumps(corpus, ensure_ascii=False, separators=(",", ":")))

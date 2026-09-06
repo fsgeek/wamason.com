@@ -113,6 +113,12 @@ def collect(repo=REPO):
             "author": decl.get("author", ""),
             "byline": decl.get("byline", ""),
             "gloss": decl.get("gloss", ""),
+            # Optional. A stone may be amended after publication -- on
+            # 2026-09-06 Tupuq added a postscript to its own note a day
+            # later. Without this the index shows only the original date
+            # and a reader cannot tell the entry has changed; the fact
+            # lives in the git log, which readers do not have.
+            "amended": decl.get("amended", ""),
             "order": len(recs),
         })
         seen[href] = path

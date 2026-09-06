@@ -25,6 +25,29 @@ regenerated = render_index(recs, original)
 # gloss, title, href, author and meta line survives verbatim.
 norm = lambda s: re.sub(r"\s+", " ", s).strip()
 
+# str.format() silently ignores keyword arguments the template does not
+# use, so a half-applied edit to ENTRY renders clean output with a field
+# missing and raises nothing.
+#
+# This must read the STONES' declarations, not the index. An earlier
+# version of this check re-extracted from the index itself, so when the
+# template dropped a field both sides lost it together and the test
+# passed. A check whose expected value is derived from the thing under
+# test proves nothing.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ayllu as _ayllu                          # noqa: E402
+
+_declared, _ = _ayllu.collect()
+for _d in _declared:
+    for field in ("amended",):
+        val = _d.get(field)
+        if val and str(val) not in regenerated:
+            print(f"FIELD DROPPED: {field}={val!r} is declared by "
+                  f"{_d['href']} but never reached the rendered index -- "
+                  f"the template probably does not reference it.",
+                  file=sys.stderr)
+            sys.exit(1)
+
 lost = [r for r in recs if r["gloss"] and r["gloss"] not in regenerated]
 lost += [r for r in recs if r["title"] not in regenerated]
 lost += [r for r in recs if r["href"] not in regenerated]

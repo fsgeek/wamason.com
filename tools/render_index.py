@@ -14,7 +14,7 @@ import re
 ENTRY = (
     '        <li class="entry">\n'
     '          <div class="meta">{kind} &middot; {date} &middot; by '
-    '<span class="author">{author}</span>{suffix}</div>\n'
+    '<span class="author">{author}</span>{suffix}{amended}</div>\n'
     '          <div class="entry-title"><a href="{href}">{title}</a></div>\n'
     '          <p class="entry-gloss">{gloss}</p>\n'
     '        </li>\n'
@@ -27,6 +27,8 @@ def render_entries(records):
         out.append(ENTRY.format(
             kind=r["kind"], date=r["date"], author=r["author"],
             suffix=r["byline_suffix"], href=r["href"],
+            amended=(f' <span class="amended">&middot; amended '
+                     f'{r["amended"]}</span>' if r.get("amended") else ""),
             title=r["title"], gloss=r["gloss"] or "",
         ))
     return "".join(out)

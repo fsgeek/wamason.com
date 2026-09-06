@@ -9,3 +9,5 @@ CLAUDE.md
 # ignore tmp artifacts
 tmp/
 
+__pycache__/
+*.pyc
