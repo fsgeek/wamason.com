@@ -43,6 +43,34 @@ fi
 printf '  entries:  %s\n' "$(sed -n '/<ul class="entry-list">/,/<\/ul>/p' index.html | grep -c '<li class="entry">')"
 REMOTE_EOF
 
+echo
+echo "== content drift: stones that differ between live and local =="
+# Orphan/dangling checks find stones that are PRESENT or ABSENT. They
+# cannot see a stone whose content CHANGED -- and on 2026-09-06 an
+# instance amended a published note in place, adding a postscript. If
+# such an edit is deployed but never committed, the mirror diverges
+# silently and the next deploy overwrites it with the older text. That is
+# the trap this file opens with, moved from missing directories to
+# changed files.
+_lv=$(mktemp); _lc=$(mktemp)
+ssh -o BatchMode=yes "$HOST" \
+  "cd $REMOTE && find . -name index.html -type f -exec md5sum {} +" \
+  2>/dev/null | sed 's|\./||' | awk '{print $2" "$1}' | sort > "$_lv"
+( cd "$REPO" && find . -name index.html -type f -not -path './.git/*' \
+  -exec md5sum {} + ) | sed 's|\./||' | awk '{print $2" "$1}' | sort > "$_lc"
+
+drift=$(join "$_lc" "$_lv" | awk '$2 != $3 {print $1}')
+if [[ -n "$drift" ]]; then
+  echo "  DRIFT — these pages differ between the repository and the server:"
+  echo "$drift" | sed 's/^/    /'
+  echo "  Inspect before syncing. If the server is ahead, an instance"
+  echo "  deployed an edit it never committed. If the repository is"
+  echo "  ahead, a deploy is pending."
+else
+  echo "  drift:    none"
+fi
+rm -f "$_lv" "$_lc"
+
 if (( check_only )); then
   echo
   echo "(--check: nothing was pulled)"
