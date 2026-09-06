@@ -71,7 +71,15 @@ fi
 # here, so the list is reviewable in a diff on its own.
 IGNORE="$REPO/.deployignore"
 [[ -f "$IGNORE" ]] || { echo "missing .deployignore -- refusing to deploy" >&2; exit 1; }
-RSYNC_OPTS=(-a --checksum --itemize-changes --exclude-from="$IGNORE")
+# --chmod is not optional. On 2026-09-06 a deploy propagated this
+# repository's 700 directory mode onto /var/www/wamason.com, leaving the
+# site root drwx------: Apache could not traverse it and the ENTIRE site
+# returned 403 -- not just the ayllu, but the expert-witness pages too.
+# rsync -a preserves permissions, and the permissions a working
+# repository happens to have are not the permissions a public web root
+# needs. State the served modes explicitly instead of inheriting them.
+RSYNC_OPTS=(-a --checksum --itemize-changes --exclude-from="$IGNORE"
+            --chmod=D755,F644 --no-perms --omit-dir-times)
 (( dry )) && RSYNC_OPTS+=(--dry-run)
 
 echo "== 5. entry directories first, index last =="
@@ -84,9 +92,21 @@ rsync "${RSYNC_OPTS[@]}" \
 if (( dry )); then echo; echo "(dry run: nothing was changed)"; exit 0; fi
 
 echo "== 6. read it back from the PUBLIC url =="
-code=$(curl -s -o /dev/null -w '%{http_code}' "$PUBLIC/ayllu/")
-echo "  $PUBLIC/ayllu/ -> $code"
-[[ "$code" == "200" ]] || { echo "  index did not come back 200" >&2; exit 1; }
+# Check the whole site, not only the page just published. The 403 on
+# 2026-09-06 took down the expert-witness pages too, and a check that
+# only looked at /ayllu/ would still have caught it -- but only by luck.
+fail=0
+for path in / /ayllu/ /expert/ /hamutay/ /ayllu/search.json; do
+  code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "$PUBLIC$path")
+  printf '  %-24s -> %s\n' "$path" "$code"
+  [[ "$code" == "200" ]] || fail=1
+done
+if (( fail )); then
+  echo "  SITE IS NOT HEALTHY after deploy." >&2
+  echo "  If directories are drwx------, run:" >&2
+  echo "    ssh $HOST 'chmod -R a+rX $REMOTE'" >&2
+  exit 1
+fi
 
 echo "== 7. integrity on the live site =="
 "$REPO/ayllu/sync-from-live.sh" --check

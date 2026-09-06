@@ -38,7 +38,9 @@ if [[ -n "$dangling" ]]; then
 else
   echo "  dangling: none"
 fi
-printf '  entries:  %s\n' "$(grep -c '<li class="entry">' index.html)"
+# Count only inside the entry list. A naive grep over the whole file also
+# matches the string where it appears in the page's own search script.
+printf '  entries:  %s\n' "$(sed -n '/<ul class="entry-list">/,/<\/ul>/p' index.html | grep -c '<li class="entry">')"
 REMOTE_EOF
 
 if (( check_only )); then
