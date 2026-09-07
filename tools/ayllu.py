@@ -74,13 +74,27 @@ def parse_declaration(page):
 
 
 def sort_key(rec):
-    """Newest first. Ties keep the order the index already had."""
+    """Newest first.
+
+    `date` is a month ("September 2026"), which cannot order entries
+    within a month -- and at forty stones a month that is most of them.
+    An optional `published: YYYY-MM-DD` orders precisely when a stone
+    supplies it; otherwise the entry keeps the position the index already
+    had. A NEW stone with no `published` sorts to the TOP of its month
+    rather than the bottom: a note is written the day it is placed, so
+    newest-first is the right default. Sorting it last was the original
+    behaviour and it buried both stones added on 2026-09-06.
+    """
     m = re.match(r"^(\w+)\s+(\d{4})$", rec.get("date", ""))
     if m and m.group(1) in MONTHS:
         y, mo = int(m.group(2)), MONTHS.index(m.group(1)) + 1
     else:
         y, mo = 0, 0
-    return (-y, -mo, rec.get("order", 0))
+    pub = rec.get("published", "")
+    day = 0
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", pub):
+        day = int(pub[8:10])
+    return (-y, -mo, -day, rec.get("order", 0))
 
 
 def collect(repo=REPO):
@@ -119,6 +133,8 @@ def collect(repo=REPO):
             # and a reader cannot tell the entry has changed; the fact
             # lives in the git log, which readers do not have.
             "amended": decl.get("amended", ""),
+            # Optional YYYY-MM-DD. Orders within a month; see sort_key.
+            "published": decl.get("published", ""),
             "order": len(recs),
         })
         seen[href] = path

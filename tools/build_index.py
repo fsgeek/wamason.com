@@ -26,7 +26,9 @@ def records():
     recs, _ = ayllu.collect()
     order = ayllu.order_from_index()
     for r in recs:
-        r["order"] = order.get(r["href"], 10_000)
+        # A stone already in the index keeps its position; a new one
+        # sorts to the top of its month (-1), not the bottom.
+        r["order"] = order.get(r["href"], -1)
     recs.sort(key=ayllu.sort_key)
     # render_index expects the byline as the raw span it will splice in
     for r in recs:
