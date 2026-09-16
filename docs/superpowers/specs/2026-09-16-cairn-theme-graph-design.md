@@ -175,11 +175,14 @@ belongs to.
   allowance is a Community Edition property. Since ArangoDB 3.12.5,
   Community Edition ships every Enterprise feature with no time
   restriction, capped at 100GB and restricted to non-commercial/local
-  use. This deployment is local-only and nowhere near 100GB, so
-  Community is both the correctly-licensed and the correctly-scoped
-  choice. (Vector/embedding support was v1's other justification for
-  Enterprise; Stage 1 uses no embeddings, so it was never a live
-  requirement either way.)
+  use — so at the same version number (both images here are
+  `3.12.9.4`), Community and Enterprise are functionally identical; the
+  choice is a license-terms question, not a capability trade-off. This
+  deployment is local-only and nowhere near 100GB, so it qualifies for
+  Community's terms outright, at no functional cost either way.
+  (Vector/embedding support was v1's other justification for Enterprise;
+  Stage 1 uses no embeddings, so it was never a live requirement either
+  way.)
 - Bound to `127.0.0.1` only on its host, not `0.0.0.0`. A second machine
   reaching it does so over an SSH tunnel to a **designated host** — this
   needs to be named explicitly (which machine runs the canonical
@@ -401,9 +404,11 @@ snapshot, not the recovery path.
   v1, mutated state) to `check_facets.py` (which reports, and never
   writes) plus a separate, explicit promotion step.
 - Switched the ArangoDB image from `arangodb/enterprise:3.12.9.4` to
-  `arangodb/arangodb:3.12.9.4` (Community Edition) — the 100GB
+  `arangodb/arangodb:3.12.9.4` (Community Edition) — no functionality is
+  traded away (Community has had full Enterprise feature parity since
+  3.12.5), so this is purely a license-terms fix: the 100GB
   commercial-free allowance v1 cited belongs to Community, not
-  Enterprise, and this deployment fits Community's terms exactly.
+  Enterprise, and this deployment qualifies for it outright.
 - Added a pilot step (§5, gloss vs. body, ~12 stones) before backfill,
   and a retrieval evaluation (§6) before treating backfill as complete —
   v1 tested structural fidelity only, never usefulness.
