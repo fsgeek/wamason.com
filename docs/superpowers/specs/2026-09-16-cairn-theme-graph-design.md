@@ -12,8 +12,10 @@ an ambiguous empty state, a verification check that would flip on
 amendment, self-review masquerading as review, theme definitions with no
 review discipline of their own, and confident language about legal
 license qualification this document isn't positioned to assert. v3 fixes
-those. See **Revision log** at the end for the full account of both
-rounds.
+those. v3.1 (2026-09-19) closes the two remaining open questions about
+where `arango-ayllu` runs and how it's reached, ahead of writing the
+implementation plan. See **Revision log** at the end for the full
+account.
 
 ## Why
 
@@ -85,7 +87,7 @@ the same place a stone's own content lives, so two authors extracting
 themes for two different stones can never collide, and git's file-level
 merge already handles the case that matters (two people editing the
 *same* stone's facets — rare, and already a hard case for anything in
-this repo; not designed further here, per Open question 4).
+this repo; not designed further here, per Open question 2).
 
 `facets.json` is an **envelope**, not a bare list. A bare assertion list
 cannot distinguish "this stone has never been examined" from "extraction
@@ -271,10 +273,25 @@ in-place rewrite.
   isn't positioned to adjudicate. If that matters before deployment,
   confirm against the license text directly rather than against this
   summary.
-- Bound to `127.0.0.1` only on its host, not `0.0.0.0`. A second machine
-  reaching it does so over an SSH tunnel to a **designated host** — which
-  host, and the tunnel convention, is named but not resolved here.
-  **Open question 3.**
+- Canonical host: the machine this project's work already happens on —
+  concretely, Docker Desktop on the Windows host, reached from this WSL2
+  environment via the Windows/WSL2 Docker integration (the same
+  mechanism `arango-vector-sandbox`, `arango-indaleko-*`, and
+  `tampu-path-pilot-*` already run under; `docker ps` inside WSL2 lists
+  them, but they are not containers of the WSL2 Linux VM itself).
+  Resolved 2026-09-19, in conversation, closing what was Open question 2
+  in earlier drafts.
+- Bound to `0.0.0.0` on port `8531` (8529, 8530, 18529 are already
+  claimed by sibling containers), matching every existing Arango
+  container on this host — confirmed by inspecting
+  `arango-vector-sandbox`'s actual port binding rather than assumed.
+  This makes it LAN-visible the same way the existing containers already
+  are (`wam-nuc` reaches one of them for `llm-memory` over the LAN, with
+  no SSH tunnel). v3 specified `127.0.0.1`-only and deferred the
+  multi-machine question to an SSH tunnel that was never designed;
+  matching the sibling containers' real pattern makes that tunnel
+  unnecessary rather than solving for it. Resolved 2026-09-19, closing
+  what was Open question 3.
 - Separate container, volume, and credentials from
   `arango-vector-sandbox`, `arango-indaleko-*`, `tampu-path-pilot-*`.
 - Loaded entirely from `facets.json` files + `themes.json` by a
@@ -301,7 +318,7 @@ in-place rewrite.
   `_from`/`_to` edges between `stones` and `themes`). Whether
   `"rejected"` assertions are imported at all, or only
   `"superseded"`/`"proposed"`/accepted tiers, is implementation detail —
-  see Open question 4a.
+  see Open question 3.
 
 ### 4. Extraction, review, and promotion
 
@@ -500,19 +517,13 @@ recovery path.
    extraction going forward (new stones, after Stage 1 ships) inherits
    whatever the pilot decides unless a specific stone's author has
    reason to deviate.
-2. **Which host runs the canonical `arango-ayllu`, and what's the SSH
-   tunnel convention for a second machine?** Named as a real question,
-   not assumed away — "bound to localhost" is a security property of
-   whichever host it runs on, not by itself an answer to multi-machine
-   coordination. Needs resolving before an implementation plan can
-   specify deployment.
-3. **Uniqueness / concurrent-edit handling for `facets.json`.** Two
+2. **Uniqueness / concurrent-edit handling for `facets.json`.** Two
    instances proposing assertions for the *same* stone at the same time
    is the one case file-per-stone doesn't fully dissolve (it dissolves
    cross-stone collisions, not within-stone ones). Likely answer is
    "same as any other git conflict in a small JSON file, resolve by
    hand," but not designed in detail here.
-4. **Schema details left to the implementation plan, not re-opened here
+3. **Schema details left to the implementation plan, not re-opened here
    as design questions:** the exact gloss-v1/body-v1 normalization
    algorithm; whether `"rejected"` assertions are imported into
    ArangoDB or only kept in git; deterministic tie-breaking when two
@@ -637,3 +648,19 @@ recovery path.
   — likely unlinked only in an earlier, pre-merge state this instance
   saw before resolving that morning's merge conflict. Does not affect
   the design.
+
+**v3 → v3.1, 2026-09-19, resolving Open questions 2 and 3 before writing
+the implementation plan:**
+
+- Closed the canonical-host question: the machine this project's work
+  already happens on, via Docker Desktop on the Windows host reached
+  through the WSL2 Docker integration — the same mechanism the sibling
+  Arango containers already run under.
+- Closed the binding question by checking the sibling containers' actual
+  configuration instead of assuming: `arango-vector-sandbox` is bound
+  `0.0.0.0`, not `127.0.0.1` as this document previously specified, and
+  is already LAN-reachable (`wam-nuc` uses this for `llm-memory`). v3
+  specified `127.0.0.1`-only and deferred a multi-machine SSH tunnel that
+  was never designed; matching the sibling containers' real,
+  already-working pattern (`0.0.0.0`, port `8531`) makes that tunnel
+  unnecessary rather than solving for it.
