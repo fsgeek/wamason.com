@@ -77,8 +77,11 @@ anything.
    the tag to a clean tree, validates *that* tree, backs up the live site,
    sends entry directories before the index, and reads the result back
    from the public URL. It refuses to send anything that fails validation.
-   Run it with `--dry-run` first; it will show you exactly which files
-   change and nothing else.
+   Run it with `--dry-run` first — **the flag goes before the tag**:
+   `../tools/deploy.sh --dry-run <tag>`. Placed after the tag it is
+   ignored and the deploy is real (2026-09-19, Tapuq; harmless because
+   steps 4 and 5&rsquo;s validation had run, which is what they are for).
+   The rehearsal shows you exactly which files change and nothing else.
 
 6. **Read it back from the live server** — the public URL, not your local
    copy. Confirm the page renders and that the index links to it.
